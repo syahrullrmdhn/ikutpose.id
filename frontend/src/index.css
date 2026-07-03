@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Instrument Serif', Georgia, serif;
+  }
+
+  body {
+    @apply bg-dusty-pink-100 text-warm-gray-500;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-dusty-pink-400 text-white px-7 py-3 rounded-sm font-semibold tracking-wide transition-all duration-200 hover:bg-dusty-pink-600 shadow-btn;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-dusty-pink-400 text-dusty-pink-400 px-7 py-3 rounded-sm font-semibold tracking-wide transition-all duration-200 hover:bg-dusty-pink-400 hover:text-white;
+  }
+
+  .card {
+    @apply bg-white rounded-md border border-dusty-pink-200 shadow-card transition-shadow duration-200 hover:shadow-card-hover;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-sm border border-warm-gray-200 text-warm-gray-500 placeholder-warm-gray-400 focus:outline-none focus:border-dusty-pink-400 focus:ring-[3px] focus:ring-dusty-pink-400/35 transition-all duration-200;
+  }
+}
