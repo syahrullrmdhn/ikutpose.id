@@ -15,7 +15,7 @@ export default function Footer() {
  <div className="flex flex-col md:flex-row justify-between gap-8">
  <div>
  <Link to="/" className="flex items-center mb-3">
- <img src="/LightMode.png" alt="IkutPose" className="h-7 w-auto" />
+ <img src="/Logobulat.jpg" alt="IkutPose" className="h-8 w-8 rounded-full" />
  </Link>
  <p className="text-sm text-warm-gray max-w-xs font-medium">
  Abadikan momen, ciptakan kenangan. Digital photobooth yang bisa kamu akses kapanpun, di manapun.

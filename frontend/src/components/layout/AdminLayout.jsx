@@ -42,7 +42,7 @@ export default function AdminLayout() {
 
  <aside className={`fixed lg:sticky top-0 left-0 h-screen z-50 bg-white border-r-2 border-soft-gray flex flex-col transition-all duration-300 ${collapsed ? 'w-[72px]' : 'w-64'} ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
  <div className="h-16 flex items-center justify-between px-4 border-b-2 border-soft-gray">
- {!collapsed && <img src="/LightMode.png" alt="IkutPose" className="h-7 w-auto" />}
+ {!collapsed && <img src="/Logobulat.jpg" alt="IkutPose" className="h-8 w-8 rounded-full" />}
  <button onClick={() => setCollapsed(!collapsed)} className="hidden lg:flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-400">
  <ChevronLeft size={18} className={`transition-transform ${collapsed ? 'rotate-180' : ''}`} />
  </button>

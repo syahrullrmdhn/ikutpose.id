@@ -32,7 +32,7 @@ export default function RegisterPage() {
  <div className="min-h-screen bg-[#FAFAFA] font-sans text-charcoal selection:bg-rose-300 flex flex-col justify-center px-6 py-12">
  <div className="sm:mx-auto sm:w-full sm:max-w-md">
  <Link to="/" className="flex justify-center mb-8">
- <img src="/LightMode.png" alt="IkutPose" className="h-8 w-auto" />
+ <img src="/Logobulat.jpg" alt="IkutPose" className="h-16 w-16 mx-auto mb-6 rounded-full shadow-card" />
  </Link>
 
  <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>

@@ -31,9 +31,7 @@ export default function LoginPage() {
  return (
  <div className="min-h-screen bg-[#FAFAFA] font-sans text-charcoal selection:bg-rose-300 flex flex-col justify-center px-6 py-12">
  <div className="sm:mx-auto sm:w-full sm:max-w-md">
- <Link to="/" className="flex justify-center mb-8">
- <img src="/LightMode.png" alt="IkutPose" className="h-8 w-auto" />
- </Link>
+ <img src="/Logobulat.jpg" alt="IkutPose" className="h-16 w-16 mx-auto mb-6 rounded-full shadow-card" />
 
  <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
  <div className="bg-white rounded-xl border border-border-subtle shadow-card px-8 py-10">
@@ -71,12 +69,6 @@ export default function LoginPage() {
  {loading ? 'Masuk...' : 'Masuk'}
  </button>
  </form>
-
- <div className="mt-6 pt-4 border-t-2 border-slate-100">
- <p className="text-xs text-slate-400 font-medium text-center">
- Admin: <span className="text-slate-600">admin@ikutpose.com</span> / <span className="text-slate-600">password</span>
- </p>
- </div>
  </div>
  </motion.div>
 

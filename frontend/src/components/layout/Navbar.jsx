@@ -14,10 +14,10 @@ export default function Navbar() {
  const { user, isAuthenticated, logout } = useAuthStore()
 
  return (
- <nav className="sticky top-0 z-50 bg-[#FAFAFA]/90 backdrop-blur-md border-b-2 border-soft-gray">
+ <nav className="sticky top-0 z-50 bg-white/40 backdrop-blur-lg border-b border-border-subtle">
  <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
  <Link to="/" className="flex items-center">
- <img src="/LightMode.png" alt="IkutPose" className="h-8 w-auto" />
+ <img src="/Logobulat.jpg" alt="IkutPose" className="h-10 w-10 rounded-full shadow-card hover:scale-105 transition-transform" />
  </Link>
 
  <div className="hidden md:flex items-center gap-6">
