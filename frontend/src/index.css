@@ -1,42 +1,102 @@
+@import "tailwindcss";
+
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  html {
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1, h2, h3 {
-    font-family: 'Instrument Serif', Georgia, serif;
-  }
-
-  body {
-    @apply bg-gray-50 text-gray-900;
-  }
+@theme {
+  --color-primary-50: #fff1f1;
+  --color-primary-100: #ffe1e1;
+  --color-primary-200: #ffc7c8;
+  --color-primary-300: #ffa0a1;
+  --color-primary-400: #ff696b;
+  --color-primary-500: #ff4d50;
+  --color-primary-600: #ed1c1f;
+  --color-primary-700: #c81416;
+  --color-primary-800: #a51315;
+  --color-primary-900: #881618;
+  --color-primary-950: #4a0708;
+  
+  --font-heading: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-primary-500 text-white px-7 py-3 rounded-lg font-semibold tracking-wide transition-all duration-200 hover:bg-primary-600 shadow-lg;
-  }
+html {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  .btn-secondary {
-    @apply bg-transparent border-2 border-primary-500 text-primary-500 px-7 py-3 rounded-lg font-semibold tracking-wide transition-all duration-200 hover:bg-primary-500 hover:text-white;
-  }
+h1, h2, h3 {
+  font-family: var(--font-heading);
+}
 
-  .card {
-    @apply bg-white rounded-lg border border-gray-200 shadow-md transition-shadow duration-200 hover:shadow-lg;
-  }
+body {
+  background-color: rgb(249 250 251);
+  color: rgb(17 24 39);
+}
 
-  .input-field {
-    @apply w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-200;
-  }
+.btn-primary {
+  background-color: var(--color-primary-500);
+  color: white;
+  padding: 0.75rem 1.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-600);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid var(--color-primary-500);
+  color: var(--color-primary-500);
+  padding: 0.75rem 1.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary-500);
+  color: white;
+}
+
+.card {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(229 231 235);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(209 213 219);
+  color: rgb(17 24 39);
+  transition: all 0.2s;
+}
+
+.input-field::placeholder {
+  color: rgb(156 163 175);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgb(255 77 80 / 0.1);
 }
