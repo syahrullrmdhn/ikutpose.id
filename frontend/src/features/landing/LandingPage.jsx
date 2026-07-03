@@ -29,12 +29,13 @@ export default function LandingPage() {
  <div className="min-h-screen flex flex-col bg-[#FAFAFA] font-sans text-charcoal selection:bg-rose-300">
  <Navbar />
 
- {/* Hero Section - Soft Neobrutalism */}
- <section className="relative flex-1 flex items-center justify-center px-6 py-20 md:py-32 overflow-hidden bg-[#FAFAFA]">
- {/* Subtle grid background */}
- <div className="absolute inset-0 z-0 opacity-[0.03]" 
- style={{ backgroundImage: 'radial-gradient(#0f172a 2px, transparent 2px)', backgroundSize: '32px 32px' }} 
- />
+ {/* Hero Section */}
+ <section 
+   className="relative flex-1 flex items-center justify-center px-6 py-20 md:py-32 overflow-hidden bg-cover bg-center"
+   style={{ backgroundImage: 'url(/abstrackping.jpeg)' }}
+ >
+   {/* Subtle overlay agar teks tetap terbaca elegan */}
+   <div className="absolute inset-0 z-0 bg-white/60 backdrop-blur-[2px]" />
 
  <div className="relative z-10 max-w-3xl mx-auto text-center">
  <motion.div
