@@ -1,27 +1,58 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 @theme {
-  --color-primary-50: #fff1f1;
-  --color-primary-100: #ffe1e1;
-  --color-primary-200: #ffc7c8;
-  --color-primary-300: #ffa0a1;
-  --color-primary-400: #ff696b;
-  --color-primary-500: #ff4d50;
-  --color-primary-600: #ed1c1f;
-  --color-primary-700: #c81416;
-  --color-primary-800: #a51315;
-  --color-primary-900: #881618;
-  --color-primary-950: #4a0708;
-  
-  --font-heading: 'Instrument Serif', Georgia, serif;
+  /* Primary Palette - Dusty Pink */
+  --color-dusty-pink: #C4919B;
+  --color-deep-rose: #A66B76;
+  --color-blush-mist: #E8CDD0;
+  --color-rose-cream: #F5E6E8;
+  --color-petal-white: #FDF5F6;
+
+  /* Neutral Palette */
+  --color-charcoal: #2D2226;
+  --color-warm-gray: #6B5B5F;
+  --color-muted-mauve: #9A8B8E;
+  --color-soft-gray: #D4CBCC;
+  --color-cloud: #F7F3F4;
+  --color-white: #FFFFFF;
+
+  /* Accent & Functional */
+  --color-mauve-gold: #C4A882;
+  --color-sage-soft: #A8B5A0;
+  --color-terra-blush: #D4A59A;
+  --color-muted-red: #C97070;
+  --color-dusty-blue: #8FA6B5;
+
+  /* Semantic */
+  --color-bg: var(--color-rose-cream);
+  --color-bg-alt: var(--color-petal-white);
+  --color-surface: var(--color-white);
+  --color-border: var(--color-soft-gray);
+  --color-border-subtle: var(--color-blush-mist);
+  --color-text: var(--color-warm-gray);
+  --color-text-strong: var(--color-charcoal);
+  --color-text-muted: var(--color-muted-mauve);
+
+  /* Fonts */
+  --font-heading: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-accent: 'Cormorant Garamond', Georgia, serif;
+  --font-accent: 'Cormorant Garamond', serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* Shadows */
+  --shadow-card: 0 2px 12px rgba(196, 145, 155, 0.08);
+  --shadow-card-hover: 0 4px 16px rgba(196, 145, 155, 0.15);
+  --shadow-btn: 0 1px 3px rgba(196, 145, 155, 0.15);
+  --shadow-modal: 0 8px 32px rgba(45, 34, 38, 0.1); /* Based on Charcoal */
+
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 }
 
 html {
@@ -30,73 +61,19 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text-strong);
 }
 
 body {
-  background-color: rgb(249 250 251);
-  color: rgb(17 24 39);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
 }
 
-.btn-primary {
-  background-color: var(--color-primary-500);
-  color: white;
-  padding: 0.75rem 1.75rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  transition: all 0.2s;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-}
-
-.btn-primary:hover {
-  background-color: var(--color-primary-600);
-}
-
-.btn-secondary {
-  background-color: transparent;
-  border: 2px solid var(--color-primary-500);
-  color: var(--color-primary-500);
-  padding: 0.75rem 1.75rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  transition: all 0.2s;
-}
-
-.btn-secondary:hover {
-  background-color: var(--color-primary-500);
-  color: white;
-}
-
-.card {
-  background-color: white;
-  border-radius: 0.5rem;
-  border: 1px solid rgb(229 231 235);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  transition: box-shadow 0.2s;
-}
-
-.card:hover {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-}
-
-.input-field {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgb(209 213 219);
-  color: rgb(17 24 39);
-  transition: all 0.2s;
-}
-
-.input-field::placeholder {
-  color: rgb(156 163 175);
-}
-
-.input-field:focus {
+*:focus-visible {
   outline: none;
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px rgb(255 77 80 / 0.1);
+  box-shadow: 0 0 0 3px rgba(196, 145, 155, 0.35);
 }
