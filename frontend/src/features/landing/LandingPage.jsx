@@ -142,8 +142,9 @@ export default function LandingPage() {
  <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
  
  {/* Card Galeri Publik */}
- <motion.div
- className="group relative h-80 rounded-xl overflow-hidden cursor-pointer border border-border-subtle shadow-card hover:shadow-card transition-all"
+ <motion.a
+ href="/gallery"
+ className="group relative block h-80 rounded-xl overflow-hidden cursor-pointer border border-border-subtle shadow-card hover:shadow-card transition-all"
  initial={{ opacity: 0, y: 20 }}
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true }}
@@ -159,18 +160,19 @@ export default function LandingPage() {
  <div className="absolute bottom-0 left-0 p-8 w-full flex justify-between items-end">
  <div>
  {/* Text putih + drop shadow */}
- <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-md">Galeri Publik</h3>
+ <h3 className="text-2xl font-bold !text-white mb-1 drop-shadow-md">Galeri Publik</h3>
  <p className="text-rose-50 text-sm font-medium drop-shadow-md opacity-90">Lihat momen yang dibagikan</p>
  </div>
  <div className="w-10 h-10 rounded-lg bg-white border border-border-subtle shadow-card flex items-center justify-center text-charcoal -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
  <ArrowRight size={18} strokeWidth={2.5} />
  </div>
  </div>
- </motion.div>
+ </motion.a>
 
  {/* Card Custom Event */}
- <motion.div
- className="group relative h-80 rounded-xl overflow-hidden cursor-pointer border border-border-subtle shadow-card hover:shadow-card transition-all"
+ <motion.a
+ href="/events"
+ className="group relative block h-80 rounded-xl overflow-hidden cursor-pointer border border-border-subtle shadow-card hover:shadow-card transition-all"
  initial={{ opacity: 0, y: 20 }}
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true }}
@@ -187,14 +189,14 @@ export default function LandingPage() {
  <div className="absolute bottom-0 left-0 p-8 w-full flex justify-between items-end">
  <div>
  {/* Text putih + drop shadow */}
- <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-md">Custom Event</h3>
+ <h3 className="text-2xl font-bold !text-white mb-1 drop-shadow-md">Custom Event</h3>
  <p className="text-rose-50 text-sm font-medium drop-shadow-md opacity-90">Photobooth dengan brandingmu</p>
  </div>
  <div className="w-10 h-10 rounded-lg bg-white border border-border-subtle shadow-card flex items-center justify-center text-charcoal -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
  <ArrowRight size={18} strokeWidth={2.5} />
  </div>
  </div>
- </motion.div>
+ </motion.a>
  </div>
  </section>
 

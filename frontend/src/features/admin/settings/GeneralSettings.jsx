@@ -8,7 +8,6 @@ export default function GeneralSettings() {
  const [settings, setSettings] = useState({
  site_name: '',
  site_tagline: '',
- contact_email: '',
  default_countdown: 3,
  default_max_photos: 4,
  watermark_text: '',
@@ -17,6 +16,11 @@ export default function GeneralSettings() {
  storage_driver: 'local',
  photo_retention_days: 30,
  max_upload_size: 10,
+ about_us_content: '',
+ contact_email: '',
+ contact_whatsapp: '',
+ contact_instagram: '',
+ contact_address: '',
  })
  const [saved, setSaved] = useState(false)
 

@@ -9,6 +9,31 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    public function publicIndex(): JsonResponse
+    {
+        // Kunci setting yang boleh diakses publik
+        $publicKeys = [
+            'site_name', 'site_tagline', 
+            'about_us_content', 
+            'contact_email', 'contact_whatsapp', 'contact_instagram', 'contact_address'
+        ];
+
+        $settings = Setting::whereIn('key', $publicKeys)->get()->map(function ($setting) {
+            return [
+                'key' => $setting->key,
+                'value' => $this->castValue($setting->value, $setting->type),
+            ];
+        });
+
+        // Ubah menjadi format key-value flat object
+        $flatSettings = [];
+        foreach ($settings as $s) {
+            $flatSettings[$s['key']] = $s['value'];
+        }
+
+        return response()->json($flatSettings);
+    }
+
     public function index(): JsonResponse
     {
         $settings = Setting::all()->map(function ($setting) {
@@ -46,6 +71,14 @@ class SettingController extends Controller
             if ($setting) {
                 $castedValue = $this->prepareValue($item['value'] ?? null, $setting->type);
                 $setting->update(['value' => $castedValue]);
+            } else {
+                // Buat baru jika belum ada
+                Setting::create([
+                    'key' => $item['key'],
+                    'value' => (string) ($item['value'] ?? ''),
+                    'type' => 'string',
+                    'group' => 'general'
+                ]);
             }
         }
 

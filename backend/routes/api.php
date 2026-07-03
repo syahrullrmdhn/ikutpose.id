@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\DashboardController;
 // Public routes
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
+Route::get('/settings', [SettingController::class, 'publicIndex']);
 
 // Public booth routes
 Route::get('/booth/templates', [TemplateController::class, 'publicIndex']);

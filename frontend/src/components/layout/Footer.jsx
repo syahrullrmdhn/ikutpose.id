@@ -5,6 +5,8 @@ const links = [
  { label: 'Booth', href: '/booth' },
  { label: 'Events', href: '/events' },
  { label: 'Gallery', href: '/gallery' },
+ { label: 'Tentang Kami', href: '/about' },
+ { label: 'Hubungi Kami', href: '/contact' },
  { label: 'Login', href: '/login' },
 ]
 

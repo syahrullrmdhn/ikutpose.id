@@ -7,6 +7,8 @@ const links = [
  { label: 'Booth', href: '/booth' },
  { label: 'Events', href: '/events' },
  { label: 'Gallery', href: '/gallery' },
+ { label: 'Tentang', href: '/about' },
+ { label: 'Kontak', href: '/contact' },
 ]
 
 export default function Navbar() {
