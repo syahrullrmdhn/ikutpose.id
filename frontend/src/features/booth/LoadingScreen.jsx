@@ -35,7 +35,7 @@ export default function LoadingScreen() {
         <div className="relative mx-auto w-24 h-24">
           <div className="absolute inset-0 bg-dusty-pink/20 rounded-full animate-ping" />
           <div className="absolute inset-2 bg-dusty-pink/30 rounded-full animate-pulse" />
-          <div className="relative w-full h-full bg-white rounded-full shadow-lg flex items-center justify-center">
+          <div className="relative w-full h-full bg-white dark:bg-gray-900 rounded-full shadow-lg flex items-center justify-center">
             <Camera size={36} className="text-dusty-pink animate-bounce" />
           </div>
           

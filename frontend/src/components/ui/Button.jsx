@@ -4,9 +4,9 @@ const variants = {
  primary:
  'bg-primary-400 text-white shadow-btn hover:bg-primary-500 active:bg-primary-600',
  secondary:
- 'border border-neutral-200 text-neutral-700 hover:border-primary-400 hover:text-primary-400',
+ 'border border-neutral-200 dark:border-gray-700 text-neutral-700 hover:border-primary-400 hover:text-primary-400',
  ghost:
- 'text-neutral-500 hover:text-primary-400 hover:bg-primary-50',
+ 'text-neutral-500 dark:text-gray-400 hover:text-primary-400 hover:bg-primary-50',
  danger:
  'bg-primary-600 text-white hover:bg-primary-700',
 }

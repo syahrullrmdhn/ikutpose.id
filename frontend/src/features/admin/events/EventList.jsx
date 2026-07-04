@@ -7,7 +7,7 @@ import Card from '../../../components/ui/Card'
 
 const statusColor = {
  active: 'bg-green-50 text-green-600',
- draft: 'bg-neutral-100 text-neutral-500',
+ draft: 'bg-neutral-100 dark:bg-gray-800 text-neutral-500 dark:text-gray-400',
  paused: 'bg-yellow-50 text-yellow-600',
  ended: 'bg-red-50 text-red-500',
 }
@@ -33,8 +33,8 @@ export default function EventList() {
  <div className="space-y-6">
  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
  <div>
- <h2 className="text-xl font-bold text-neutral-800">Events</h2>
- <p className="text-sm text-neutral-500">{list.length} event</p>
+ <h2 className="text-xl font-bold text-neutral-800 dark:text-gray-100">Events</h2>
+ <p className="text-sm text-neutral-500 dark:text-gray-400">{list.length} event</p>
  </div>
  <Link to="/admin/events/create" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-400 text-white text-sm font-semibold hover:bg-primary-500 transition-colors">
  <Plus size={16} />Buat Event
@@ -42,9 +42,9 @@ export default function EventList() {
  </div>
 
  <div className="relative max-w-sm">
- <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+ <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-gray-500" />
  <input type="text" placeholder="Cari event..." value={search} onChange={(e) => setSearch(e.target.value)}
- className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-neutral-200 text-sm focus:outline-none focus:border-primary-400" />
+ className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-neutral-200 dark:border-gray-700 text-sm focus:outline-none focus:border-primary-400" />
  </div>
 
  {isLoading ? (
@@ -59,15 +59,15 @@ export default function EventList() {
  <Calendar size={20} className="text-primary-400" />
  </div>
  <div>
- <p className="font-semibold text-neutral-800">{e.name}</p>
- <p className="text-xs text-neutral-400 mt-0.5">{e.start_date?.split('T')?.[0]} &middot; {e.photo_sessions_count ?? 0} sesi</p>
+ <p className="font-semibold text-neutral-800 dark:text-gray-100">{e.name}</p>
+ <p className="text-xs text-neutral-400 dark:text-gray-500 mt-0.5">{e.start_date?.split('T')?.[0]} &middot; {e.photo_sessions_count ?? 0} sesi</p>
  </div>
  </div>
  <div className="flex items-center gap-2">
  <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${statusColor[e.status]}`}>{e.status}</span>
- <Link to={`/events/${e.slug}`} className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-400"><ExternalLink size={16} /></Link>
- <Link to={`/admin/events/${e.id}/edit`} className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-400"><Edit size={16} /></Link>
- <button onClick={() => { if (confirm('Hapus event?')) deleteMut.mutate(e.id) }} className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-400 hover:text-red-500"><Trash2 size={16} /></button>
+ <Link to={`/events/${e.slug}`} className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-800 dark:bg-gray-800 text-neutral-400 dark:text-gray-500"><ExternalLink size={16} /></Link>
+ <Link to={`/admin/events/${e.id}/edit`} className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-800 dark:bg-gray-800 text-neutral-400 dark:text-gray-500"><Edit size={16} /></Link>
+ <button onClick={() => { if (confirm('Hapus event?')) deleteMut.mutate(e.id) }} className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-800 dark:bg-gray-800 text-neutral-400 dark:text-gray-500 hover:text-red-500"><Trash2 size={16} /></button>
  </div>
  </div>
  </Card>

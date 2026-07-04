@@ -48,7 +48,7 @@ export default function TextArtGenerator({ onAddText }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Ketik teks lucu..."
-          className="flex-1 px-3 py-2 rounded-lg border border-border-subtle bg-white text-sm focus:ring-2 focus:ring-dusty-pink/30 focus:border-dusty-pink outline-none"
+          className="flex-1 px-3 py-2 rounded-lg border border-border-subtle bg-white dark:bg-gray-900 text-sm focus:ring-2 focus:ring-dusty-pink/30 focus:border-dusty-pink outline-none"
           onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
         />
         <button onClick={handleAdd} disabled={!text.trim()}

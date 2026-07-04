@@ -128,22 +128,22 @@ export default function CameraControls({ onClose, onCapture, aspectRatio = 1, te
     <div className="fixed inset-0 bg-black flex flex-col z-50">
       {/* Top Bar */}
       <div className="bg-black/70 backdrop-blur-sm px-6 py-4 flex items-center justify-between border-b border-white/10">
-        <button onClick={onClose} className="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+        <button onClick={onClose} className="w-10 h-10 rounded-lg bg-white dark:bg-gray-900/10 hover:bg-white dark:bg-gray-900/20 flex items-center justify-center transition-colors">
           <X size={20} className="text-white" />
         </button>
         <div className="flex gap-2">
           {['off', 3, 5, 10].map(t => (
-            <button key={String(t)} onClick={() => startTimer(t)} className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${timer === (t === 'off' ? 'off' : t + 's') ? 'bg-dusty-pink text-white' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
+            <button key={String(t)} onClick={() => startTimer(t)} className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${timer === (t === 'off' ? 'off' : t + 's') ? 'bg-dusty-pink text-white' : 'bg-white dark:bg-gray-900/10 text-white/70 hover:bg-white dark:bg-gray-900/20'}`}>
               {t === 'off' ? 'Off' : t + 's'}
             </button>
           ))}
         </div>
         <div className="flex gap-3">
-          <button onClick={() => setShowOverlayPicker(!showOverlayPicker)} className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 ${appliedOverlay && appliedOverlay.id !== 'none' ? 'bg-dusty-pink text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+          <button onClick={() => setShowOverlayPicker(!showOverlayPicker)} className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 ${appliedOverlay && appliedOverlay.id !== 'none' ? 'bg-dusty-pink text-white' : 'bg-white dark:bg-gray-900/10 text-white hover:bg-white dark:bg-gray-900/20'}`}>
             <Layers size={18} />
             Overlay
           </button>
-          <button onClick={() => setIsMirror(!isMirror)} className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 ${isMirror ? 'bg-dusty-pink text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+          <button onClick={() => setIsMirror(!isMirror)} className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 ${isMirror ? 'bg-dusty-pink text-white' : 'bg-white dark:bg-gray-900/10 text-white hover:bg-white dark:bg-gray-900/20'}`}>
             <Settings size={18} />
             Mirror {isMirror ? 'ON' : 'OFF'}
           </button>
@@ -231,11 +231,11 @@ export default function CameraControls({ onClose, onCapture, aspectRatio = 1, te
         <div className="mb-4">
           <p className="text-white/60 text-xs font-semibold mb-2">FILTERS</p>
           <div className="flex gap-2 overflow-x-auto pb-2">
-            <button onClick={() => setSelectedFilter(null)} className={`px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all flex-shrink-0 ${selectedFilter === null ? 'bg-dusty-pink text-white' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
+            <button onClick={() => setSelectedFilter(null)} className={`px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all flex-shrink-0 ${selectedFilter === null ? 'bg-dusty-pink text-white' : 'bg-white dark:bg-gray-900/10 text-white/70 hover:bg-white dark:bg-gray-900/20'}`}>
               None
             </button>
             {filters.map(filter => (
-              <button key={filter.id} onClick={() => setSelectedFilter(filter)} className={`px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all flex-shrink-0 flex items-center gap-2 ${selectedFilter?.id === filter.id ? 'bg-dusty-pink text-white' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
+              <button key={filter.id} onClick={() => setSelectedFilter(filter)} className={`px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all flex-shrink-0 flex items-center gap-2 ${selectedFilter?.id === filter.id ? 'bg-dusty-pink text-white' : 'bg-white dark:bg-gray-900/10 text-white/70 hover:bg-white dark:bg-gray-900/20'}`}>
                 <Zap size={14} />
                 {filter.name}
               </button>

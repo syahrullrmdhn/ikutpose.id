@@ -134,7 +134,7 @@ export default function QRCodeDownload({ imageDataUrl }) {
         </button>
       ) : (
         <div className="space-y-3">
-          <div className="flex items-center justify-center p-4 bg-white rounded-lg border border-border-subtle">
+          <div className="flex items-center justify-center p-4 bg-white dark:bg-gray-900 rounded-lg border border-border-subtle">
             <canvas ref={qrCanvasRef} className="w-40 h-40" />
           </div>
 

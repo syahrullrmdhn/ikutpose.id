@@ -2,6 +2,46 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+  /* Semantic overrides for dark mode */
+  --color-bg: #0f172a;
+  --color-bg-alt: #1e293b;
+  --color-surface: #1e293b;
+  --color-border: #334155;
+  --color-border-subtle: #1e293b;
+  --color-text: #cbd5e1;
+  --color-text-strong: #f1f5f9;
+  --color-text-muted: #64748b;
+  --color-charcoal: #f1f5f9;
+  --color-warm-gray: #94a3b8;
+  --color-muted-mauve: #64748b;
+  --color-soft-gray: #334155;
+  --color-cloud: #1e293b;
+  --color-petal-white: #0f172a;
+  --color-rose-cream: #0f172a;
+
+  /* Transitions */
+  color-scheme: dark;
+}
+
+/* Smooth transition for theme changes */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark body {
+  background-color: #0f172a;
+  color: #cbd5e1;
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar { width: 8px; }
+.dark ::-webkit-scrollbar-track { background: #1e293b; }
+.dark ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
 @theme {
   /* Primary Palette - Dusty Pink */
   --color-dusty-pink: #C4919B;

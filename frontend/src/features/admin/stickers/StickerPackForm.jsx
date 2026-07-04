@@ -16,10 +16,10 @@ export default function StickerPackForm() {
  <div className="max-w-3xl space-y-6">
  <div className="flex items-center justify-between">
  <div className="flex items-center gap-3">
- <Link to="/admin/sticker-packs" className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-500">
+ <Link to="/admin/sticker-packs" className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-800 dark:bg-gray-800 text-neutral-500 dark:text-gray-400">
  <ArrowLeft size={18} />
  </Link>
- <h2 className="text-xl font-bold text-neutral-800">
+ <h2 className="text-xl font-bold text-neutral-800 dark:text-gray-100">
  Buat Sticker Pack
  </h2>
  </div>
@@ -30,32 +30,32 @@ export default function StickerPackForm() {
  </div>
 
  <Card className="p-5 space-y-4">
- <h3 className="text-sm font-semibold text-neutral-800">Info Pack</h3>
+ <h3 className="text-sm font-semibold text-neutral-800 dark:text-gray-100">Info Pack</h3>
  <div>
- <label className="block text-sm font-medium text-neutral-600 mb-1.5">Nama</label>
+ <label className="block text-sm font-medium text-neutral-600 dark:text-gray-300 mb-1.5">Nama</label>
  <input
  type="text"
  value={form.name}
  onChange={(e) => setForm({ ...form, name: e.target.value })}
  placeholder="Cute Animals"
- className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm focus:outline-none focus:border-primary-400"
+ className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-gray-700 text-sm focus:outline-none focus:border-primary-400"
  />
  </div>
  <div>
- <label className="block text-sm font-medium text-neutral-600 mb-1.5">Deskripsi</label>
+ <label className="block text-sm font-medium text-neutral-600 dark:text-gray-300 mb-1.5">Deskripsi</label>
  <textarea
  value={form.description}
  onChange={(e) => setForm({ ...form, description: e.target.value })}
  rows={3}
- className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm focus:outline-none focus:border-primary-400 resize-none"
+ className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-gray-700 text-sm focus:outline-none focus:border-primary-400 resize-none"
  />
  </div>
  <div>
- <label className="block text-sm font-medium text-neutral-600 mb-1.5">Kategori</label>
+ <label className="block text-sm font-medium text-neutral-600 dark:text-gray-300 mb-1.5">Kategori</label>
  <select
  value={form.category}
  onChange={(e) => setForm({ ...form, category: e.target.value })}
- className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm focus:outline-none focus:border-primary-400"
+ className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-gray-700 text-sm focus:outline-none focus:border-primary-400"
  >
  <option value="">Pilih kategori</option>
  <option value="cute">Cute</option>
@@ -68,13 +68,13 @@ export default function StickerPackForm() {
  </Card>
 
  <Card className="p-5 space-y-4">
- <h3 className="text-sm font-semibold text-neutral-800">Upload Sticker</h3>
- <div className="border border-dashed border-neutral-200 rounded-xl p-8 text-center hover:border-primary-300 transition-colors cursor-pointer">
- <Upload size={24} className="mx-auto text-neutral-400 mb-2" />
- <p className="text-sm text-neutral-500">Drag & drop file PNG (transparan)</p>
- <p className="text-xs text-neutral-400 mt-1">atau klik untuk browse</p>
+ <h3 className="text-sm font-semibold text-neutral-800 dark:text-gray-100">Upload Sticker</h3>
+ <div className="border border-dashed border-neutral-200 dark:border-gray-700 rounded-xl p-8 text-center hover:border-primary-300 transition-colors cursor-pointer">
+ <Upload size={24} className="mx-auto text-neutral-400 dark:text-gray-500 mb-2" />
+ <p className="text-sm text-neutral-500 dark:text-gray-400">Drag & drop file PNG (transparan)</p>
+ <p className="text-xs text-neutral-400 dark:text-gray-500 mt-1">atau klik untuk browse</p>
  </div>
- <p className="text-xs text-neutral-400">Upload multiple file sekaligus untuk bulk upload.</p>
+ <p className="text-xs text-neutral-400 dark:text-gray-500">Upload multiple file sekaligus untuk bulk upload.</p>
  </Card>
  </div>
  )

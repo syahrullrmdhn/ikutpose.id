@@ -114,7 +114,7 @@ export default function ResultPreview() {
     <div className="w-full max-w-2xl mx-auto">
       {showConfetti && <Confetti />}
       
-      <div className="bg-white rounded-2xl shadow-card p-8 space-y-6 relative overflow-hidden">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-card p-8 space-y-6 relative overflow-hidden">
         {/* Celebration Banner */}
         <div className="text-center">
           <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-dusty-pink/10 via-dusty-pink/20 to-dusty-pink/10 rounded-full">
@@ -165,7 +165,7 @@ export default function ResultPreview() {
           </button>
           <button
             onClick={handleRetake}
-            className="px-4 py-3 rounded-lg border border-border-subtle hover:border-border-default text-charcoal font-semibold transition-all flex items-center justify-center gap-2"
+            className="px-4 py-3 rounded-lg border border-border-subtle hover:border-border-default text-charcoal dark:text-gray-100 font-semibold transition-all flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
           </button>
@@ -174,7 +174,7 @@ export default function ResultPreview() {
         {/* Back Button */}
         <button
           onClick={() => prevStep()}
-          className="w-full text-center py-2 text-text-muted hover:text-charcoal transition-colors text-sm"
+          className="w-full text-center py-2 text-text-muted hover:text-charcoal dark:text-gray-100 transition-colors text-sm"
         >
           ← Kembali ke edit
         </button>

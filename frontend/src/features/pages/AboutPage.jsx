@@ -35,7 +35,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAFAFA] font-sans text-charcoal selection:bg-rose-300">
+    <div className="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-gray-950 font-sans text-charcoal dark:text-gray-100 selection:bg-rose-300">
       <Navbar />
       
       <main className="flex-1 py-20 px-6 max-w-5xl mx-auto w-full">
@@ -45,46 +45,46 @@ export default function AboutPage() {
           transition={{ duration: 0.4 }}
         >
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-charcoal mb-4">Tentang Kami</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-charcoal dark:text-gray-100 mb-4">Tentang Kami</h1>
             <div className="w-16 h-1 bg-dusty-pink mx-auto rounded-full"></div>
           </div>
           
           {/* Intro */}
-          <div className="bg-white rounded-2xl p-8 md:p-12 border border-border-subtle shadow-card mb-8">
-            <p className="text-lg leading-relaxed text-slate-600 whitespace-pre-wrap">{intro}</p>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 md:p-12 border border-border-subtle shadow-card mb-8">
+            <p className="text-lg leading-relaxed text-slate-600 dark:text-gray-300 whitespace-pre-wrap">{intro}</p>
           </div>
 
           {/* Vision */}
-          <div className="bg-white rounded-2xl p-8 md:p-12 border border-border-subtle shadow-card mb-8">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 md:p-12 border border-border-subtle shadow-card mb-8">
             <div className="flex items-center gap-3 mb-4">
               <Target className="text-dusty-pink" size={28} />
-              <h2 className="text-2xl font-bold text-charcoal">Visi Kami</h2>
+              <h2 className="text-2xl font-bold text-charcoal dark:text-gray-100">Visi Kami</h2>
             </div>
-            <p className="text-lg leading-relaxed text-slate-600">
+            <p className="text-lg leading-relaxed text-slate-600 dark:text-gray-300">
               Menjadi platform terdepan dalam industri jasa fotografi di Indonesia, mempermudah akses ke layanan fotografi profesional untuk semua kalangan.
             </p>
           </div>
 
           {/* Features */}
-          <div className="bg-white rounded-2xl p-8 md:p-12 border border-border-subtle shadow-card mb-8">
-            <h2 className="text-2xl font-bold text-charcoal mb-6">Mengapa Memilih IkutPose?</h2>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 md:p-12 border border-border-subtle shadow-card mb-8">
+            <h2 className="text-2xl font-bold text-charcoal dark:text-gray-100 mb-6">Mengapa Memilih IkutPose?</h2>
             <div className="space-y-4">
               {features.map((feature, idx) => (
                 <div key={idx} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-rose-100 flex items-center justify-center text-dusty-pink shrink-0 mt-1">
+                  <div className="w-10 h-10 rounded-lg bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-dusty-pink shrink-0 mt-1">
                     <feature.icon size={20} />
                   </div>
-                  <p className="text-slate-600 leading-relaxed pt-2">{feature.text}</p>
+                  <p className="text-slate-600 dark:text-gray-300 leading-relaxed pt-2">{feature.text}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Services */}
-          <div className="bg-white rounded-2xl p-8 md:p-12 border border-border-subtle shadow-card mb-8">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 md:p-12 border border-border-subtle shadow-card mb-8">
             <div className="flex items-center gap-3 mb-6">
               <Camera className="text-dusty-pink" size={28} />
-              <h2 className="text-2xl font-bold text-charcoal">Layanan Kami</h2>
+              <h2 className="text-2xl font-bold text-charcoal dark:text-gray-100">Layanan Kami</h2>
             </div>
             <div className="space-y-4">
               {services.map((service, idx) => (
@@ -92,7 +92,7 @@ export default function AboutPage() {
                   <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 shrink-0 mt-1">
                     <service.icon size={20} />
                   </div>
-                  <p className="text-slate-600 leading-relaxed pt-2">{service.text}</p>
+                  <p className="text-slate-600 dark:text-gray-300 leading-relaxed pt-2">{service.text}</p>
                 </div>
               ))}
             </div>

@@ -16,20 +16,20 @@ export default function BoothPage() {
  const step = useBoothStore((s) => s.step)
 
  return (
- <div className="min-h-screen bg-[#FAFAFA] font-sans text-charcoal selection:bg-rose-300 flex flex-col">
+ <div className="min-h-screen bg-[#FAFAFA] dark:bg-gray-950 font-sans text-charcoal dark:text-gray-100 selection:bg-rose-300 flex flex-col">
  <Navbar />
 
- <div className="bg-white border-b-2 border-soft-gray py-4 px-6">
+ <div className="bg-white dark:bg-gray-900 border-b-2 border-soft-gray py-4 px-6">
  <div className="max-w-4xl mx-auto flex items-center justify-between">
  {steps.map((s, i) => (
  <div key={s.number} className="flex items-center">
  <div className="flex items-center gap-2">
  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold border border-border-subtle ${
- step >= s.number ? 'bg-dusty-pink text-white text-charcoal shadow-card' : 'bg-slate-100 text-slate-400 shadow-none'
+ step >= s.number ? 'bg-dusty-pink text-white text-charcoal dark:text-gray-100 shadow-card' : 'bg-slate-100 text-slate-400 dark:text-gray-500 shadow-none'
  }`}>
  {s.number}
  </div>
- <span className={`hidden sm:block text-sm font-bold ${step >= s.number ? 'text-charcoal' : 'text-slate-400'}`}>
+ <span className={`hidden sm:block text-sm font-bold ${step >= s.number ? 'text-charcoal dark:text-gray-100' : 'text-slate-400 dark:text-gray-500'}`}>
  {s.label}
  </span>
  </div>

@@ -54,9 +54,9 @@ export default function PhotoEditor() {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="bg-white rounded-2xl shadow-card p-6 space-y-6">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-card p-6 space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-charcoal">Edit Foto</h2>
+          <h2 className="text-2xl font-bold text-charcoal dark:text-gray-100">Edit Foto</h2>
           <button onClick={() => nextStep()}
             className="px-6 py-2 rounded-lg bg-dusty-pink hover:bg-rose-500 text-white font-semibold transition-all flex items-center gap-2">
             <Check size={18} /> Selesai
@@ -135,7 +135,7 @@ export default function PhotoEditor() {
             <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
               {tabs.map(({ id, icon: Icon, label }) => (
                 <button key={id} onClick={() => setTab(id)}
-                  className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-all ${tab === id ? 'bg-white text-charcoal shadow-sm' : 'text-text-muted hover:text-charcoal'}`}>
+                  className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-all ${tab === id ? 'bg-white dark:bg-gray-900 text-charcoal dark:text-gray-100 shadow-sm' : 'text-text-muted hover:text-charcoal dark:text-gray-100'}`}>
                   <Icon size={14} /> {label}
                 </button>
               ))}
@@ -203,7 +203,7 @@ export default function PhotoEditor() {
                   <div className="grid grid-cols-4 gap-2">
                     {filteredOverlays.map((ovl) => (
                       <button key={ovl.id} onClick={() => setOverlay(ovl)}
-                        className={`p-2 rounded-lg transition-all ${appliedOverlay?.id === ovl.id ? 'bg-dusty-pink/10 ring-2 ring-dusty-pink/30' : 'hover:bg-slate-50'}`}>
+                        className={`p-2 rounded-lg transition-all ${appliedOverlay?.id === ovl.id ? 'bg-dusty-pink/10 ring-2 ring-dusty-pink/30' : 'hover:bg-slate-50 dark:hover:bg-gray-800'}`}>
                         <div className="w-full aspect-square rounded-lg overflow-hidden bg-slate-800 relative">
                           {ovl.preview ? (
                             <div className="absolute inset-0" style={{ background: ovl.preview }} />
@@ -243,7 +243,7 @@ export default function PhotoEditor() {
         {/* Bottom Navigation */}
         <div className="flex gap-3 pt-4 border-t border-border-subtle">
           <button onClick={() => prevStep()}
-            className="px-4 py-2 rounded-lg border border-border-subtle text-charcoal font-semibold transition-all flex items-center gap-2 hover:border-border-default">
+            className="px-4 py-2 rounded-lg border border-border-subtle text-charcoal dark:text-gray-100 font-semibold transition-all flex items-center gap-2 hover:border-border-default">
             <Undo2 size={18} /> Kembali
           </button>
           <button onClick={() => nextStep()}

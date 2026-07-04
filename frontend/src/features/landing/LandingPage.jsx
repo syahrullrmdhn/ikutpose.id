@@ -26,7 +26,7 @@ const steps = [
 
 export default function LandingPage() {
  return (
- <div className="min-h-screen flex flex-col bg-[#FAFAFA] font-sans text-charcoal selection:bg-rose-300">
+ <div className="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-gray-950 font-sans text-charcoal dark:text-gray-100 selection:bg-rose-300">
  <Navbar />
 
  {/* Hero Section */}
@@ -35,7 +35,7 @@ export default function LandingPage() {
    style={{ backgroundImage: 'url(/abstrackping.jpeg)' }}
  >
    {/* Subtle overlay agar teks tetap terbaca elegan */}
-   <div className="absolute inset-0 z-0 bg-white/60 backdrop-blur-[2px]" />
+   <div className="absolute inset-0 z-0 bg-white/60 dark:bg-gray-950/60 backdrop-blur-[2px]" />
 
  <div className="relative z-10 max-w-3xl mx-auto text-center">
  <motion.div
@@ -44,7 +44,7 @@ export default function LandingPage() {
  transition={{ duration: 0.4 }}
  >
  {/* BADGE DIMIRINGIN DIKIT (-rotate-2) */}
- <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-200 border border-border-subtle shadow-card text-charcoal text-xs font-bold tracking-wide uppercase mb-8 transform -rotate-2 hover:rotate-0 transition-transform duration-300 cursor-default">
+ <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-200 dark:bg-rose-900/50 border border-border-subtle shadow-card text-charcoal dark:text-gray-100 text-xs font-bold tracking-wide uppercase mb-8 transform -rotate-2 hover:rotate-0 transition-transform duration-300 cursor-default">
  <Sparkles size={14} />
  <span>Digital Photobooth</span>
  </div>
@@ -65,7 +65,7 @@ export default function LandingPage() {
  </motion.h1>
 
  <motion.p
- className="text-lg text-slate-600 max-w-xl mx-auto mb-10 leading-relaxed font-medium mt-4"
+ className="text-lg text-slate-600 dark:text-gray-300 max-w-xl mx-auto mb-10 leading-relaxed font-medium mt-4"
  initial={{ opacity: 0, y: 15 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 0.4, delay: 0.2 }}
@@ -81,14 +81,14 @@ export default function LandingPage() {
  >
  <a
  href="/booth"
- className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal font-bold text-base transition-all w-full sm:w-auto"
+ className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-base transition-all w-full sm:w-auto"
  >
  Mulai Sekarang
  <ArrowRight size={18} strokeWidth={2.5} />
  </a>
  <a
  href="/events"
- className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-white border border-border-subtle shadow-card hover:shadow-card text-charcoal font-bold text-base transition-all w-full sm:w-auto"
+ className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-white dark:bg-gray-900 border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-base transition-all w-full sm:w-auto"
  >
  Untuk Event
  </a>
@@ -97,7 +97,7 @@ export default function LandingPage() {
  </section>
 
  {/* How It Works - Neobrutalist Cards */}
- <section className="py-24 px-6 border-y-2 border-soft-gray bg-rose-50">
+ <section className="py-24 px-6 border-y-2 border-soft-gray bg-rose-50 dark:bg-rose-950/30">
  <div className="max-w-5xl mx-auto">
  <motion.div 
  className="text-center mb-16"
@@ -105,30 +105,30 @@ export default function LandingPage() {
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true }}
  >
- <h2 className="text-3xl font-extrabold mb-3 text-charcoal">Sangat Mudah Digunakan</h2>
- <p className="text-slate-600 font-medium">Tiga langkah sederhana untuk hasil foto terbaikmu.</p>
+ <h2 className="text-3xl font-extrabold mb-3 text-charcoal dark:text-gray-100">Sangat Mudah Digunakan</h2>
+ <p className="text-slate-600 dark:text-gray-300 font-medium">Tiga langkah sederhana untuk hasil foto terbaikmu.</p>
  </motion.div>
 
  <div className="grid md:grid-cols-3 gap-6">
  {steps.map((step, i) => (
  <motion.div
  key={step.number}
- className="p-8 rounded-xl bg-white border border-border-subtle shadow-card hover:shadow-card transition-all"
+ className="p-8 rounded-xl bg-white dark:bg-gray-900 border border-border-subtle shadow-card hover:shadow-card transition-all"
  initial={{ opacity: 0, y: 20 }}
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true }}
  transition={{ duration: 0.4, delay: i * 0.1 }}
  >
  <div className="flex items-center justify-between mb-8">
- <div className="w-12 h-12 rounded-lg bg-rose-200 border border-border-subtle flex items-center justify-center text-charcoal shadow-card">
+ <div className="w-12 h-12 rounded-lg bg-rose-200 dark:bg-rose-900/50 border border-border-subtle flex items-center justify-center text-charcoal dark:text-gray-100 shadow-card">
  <step.icon size={24} strokeWidth={2.5} />
  </div>
  <span className="text-lg font-black text-slate-300">
  {step.number}
  </span>
  </div>
- <h3 className="text-xl font-bold text-charcoal mb-2">{step.title}</h3>
- <p className="text-slate-600 leading-relaxed text-sm font-medium">
+ <h3 className="text-xl font-bold text-charcoal dark:text-gray-100 mb-2">{step.title}</h3>
+ <p className="text-slate-600 dark:text-gray-300 leading-relaxed text-sm font-medium">
  {step.desc}
  </p>
  </motion.div>
@@ -138,7 +138,7 @@ export default function LandingPage() {
  </section>
 
  {/* Gallery & Events - Hard Borders & White Text for Dark Image Background */}
- <section className="py-24 px-6 bg-[#FAFAFA]">
+ <section className="py-24 px-6 bg-[#FAFAFA] dark:bg-gray-950">
  <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
  
  {/* Card Galeri Publik */}
@@ -163,7 +163,7 @@ export default function LandingPage() {
  <h3 className="text-2xl font-bold !text-white mb-1 drop-shadow-md">Galeri Publik</h3>
  <p className="text-rose-50 text-sm font-medium drop-shadow-md opacity-90">Lihat momen yang dibagikan</p>
  </div>
- <div className="w-10 h-10 rounded-lg bg-white border border-border-subtle shadow-card flex items-center justify-center text-charcoal -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+ <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-900 border border-border-subtle shadow-card flex items-center justify-center text-charcoal dark:text-gray-100 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
  <ArrowRight size={18} strokeWidth={2.5} />
  </div>
  </div>
@@ -192,7 +192,7 @@ export default function LandingPage() {
  <h3 className="text-2xl font-bold !text-white mb-1 drop-shadow-md">Custom Event</h3>
  <p className="text-rose-50 text-sm font-medium drop-shadow-md opacity-90">Photobooth dengan brandingmu</p>
  </div>
- <div className="w-10 h-10 rounded-lg bg-white border border-border-subtle shadow-card flex items-center justify-center text-charcoal -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+ <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-900 border border-border-subtle shadow-card flex items-center justify-center text-charcoal dark:text-gray-100 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
  <ArrowRight size={18} strokeWidth={2.5} />
  </div>
  </div>
@@ -208,15 +208,15 @@ export default function LandingPage() {
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true }}
  >
- <h2 className="text-3xl md:text-5xl font-extrabold text-charcoal mb-6">
+ <h2 className="text-3xl md:text-5xl font-extrabold text-charcoal dark:text-gray-100 mb-6">
  Abadikan Momen, Ciptakan Kenangan
  </h2>
- <p className="text-slate-800 font-medium mb-10 max-w-lg mx-auto">
+ <p className="text-slate-800 dark:text-gray-100 font-medium mb-10 max-w-lg mx-auto">
  Tidak perlu unduh aplikasi atau bikin akun. Langsung jepret dan simpan hasil fotomu sekarang juga.
  </p>
  <a
  href="/booth"
- className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-slate-900 text-white font-bold text-lg border border-transparent hover:bg-white hover:text-charcoal hover:border-soft-gray transition-colors"
+ className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-slate-900 text-white font-bold text-lg border border-transparent hover:bg-white dark:bg-gray-900 hover:text-charcoal dark:text-gray-100 hover:border-soft-gray transition-colors"
  >
  Buka Kamera
  <ArrowRight size={20} strokeWidth={2.5} />

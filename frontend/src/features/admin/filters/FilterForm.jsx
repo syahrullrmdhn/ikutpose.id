@@ -21,10 +21,10 @@ export default function FilterForm() {
  <div className="max-w-3xl space-y-6">
  <div className="flex items-center justify-between">
  <div className="flex items-center gap-3">
- <Link to="/admin/filters" className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-500">
+ <Link to="/admin/filters" className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-800 dark:bg-gray-800 text-neutral-500 dark:text-gray-400">
  <ArrowLeft size={18} />
  </Link>
- <h2 className="text-xl font-bold text-neutral-800">
+ <h2 className="text-xl font-bold text-neutral-800 dark:text-gray-100">
  Buat Filter
  </h2>
  </div>
@@ -36,15 +36,15 @@ export default function FilterForm() {
 
  <div className="grid lg:grid-cols-2 gap-6">
  <Card className="p-5 space-y-5">
- <h3 className="text-sm font-semibold text-neutral-800">Pengaturan Filter</h3>
+ <h3 className="text-sm font-semibold text-neutral-800 dark:text-gray-100">Pengaturan Filter</h3>
  <div>
- <label className="block text-sm font-medium text-neutral-600 mb-1.5">Nama Filter</label>
+ <label className="block text-sm font-medium text-neutral-600 dark:text-gray-300 mb-1.5">Nama Filter</label>
  <input
  type="text"
  value={form.name}
  onChange={(e) => setForm({ ...form, name: e.target.value })}
  placeholder="Warm Glow"
- className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm focus:outline-none focus:border-primary-400"
+ className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-gray-700 text-sm focus:outline-none focus:border-primary-400"
  />
  </div>
 
@@ -58,8 +58,8 @@ export default function FilterForm() {
  ].map((slider) => (
  <div key={slider.key}>
  <div className="flex justify-between text-sm mb-1.5">
- <label className="font-medium text-neutral-600">{slider.label}</label>
- <span className="text-neutral-400">{form[slider.key]}{slider.key === 'hueRotate' ? '°' : '%'}</span>
+ <label className="font-medium text-neutral-600 dark:text-gray-300">{slider.label}</label>
+ <span className="text-neutral-400 dark:text-gray-500">{form[slider.key]}{slider.key === 'hueRotate' ? '°' : '%'}</span>
  </div>
  <input
  type="range"
@@ -74,14 +74,14 @@ export default function FilterForm() {
  </Card>
 
  <Card className="p-5">
- <h3 className="text-sm font-semibold text-neutral-800 mb-4">Preview</h3>
+ <h3 className="text-sm font-semibold text-neutral-800 dark:text-gray-100 mb-4">Preview</h3>
  <div className="grid grid-cols-2 gap-3">
  <div>
- <p className="text-xs text-neutral-400 mb-2 text-center">Before</p>
+ <p className="text-xs text-neutral-400 dark:text-gray-500 mb-2 text-center">Before</p>
  <div className="aspect-square rounded-xl bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200" />
  </div>
  <div>
- <p className="text-xs text-neutral-400 mb-2 text-center">After</p>
+ <p className="text-xs text-neutral-400 dark:text-gray-500 mb-2 text-center">After</p>
  <div
  className="aspect-square rounded-xl bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200"
  style={{ filter: cssFilter }}

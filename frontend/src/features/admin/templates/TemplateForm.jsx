@@ -118,13 +118,13 @@ export default function TemplateForm() {
  <div className="max-w-4xl space-y-6">
  <div className="flex items-center justify-between">
  <div className="flex items-center gap-3">
- <Link to="/admin/templates" className="w-9 h-9 rounded-lg bg-white border border-border-subtle flex items-center justify-center text-charcoal hover:shadow-card-hover transition-all">
+ <Link to="/admin/templates" className="w-9 h-9 rounded-lg bg-white dark:bg-gray-900 border border-border-subtle flex items-center justify-center text-charcoal dark:text-gray-100 hover:shadow-card-hover transition-all">
  <ArrowLeft size={16} strokeWidth={2.5} />
  </Link>
  <h2 className="text-xl font-extrabold">{isEdit ? 'Edit Template' : 'Buat Template / Photocard'}</h2>
  </div>
  <button onClick={handleSave} disabled={mut.isPending || !form.name}
- className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-dusty-pink text-white border border-border-subtle hover:shadow-card-hover text-charcoal text-sm font-bold disabled:opacity-50 transition-all">
+ className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-dusty-pink text-white border border-border-subtle hover:shadow-card-hover text-charcoal dark:text-gray-100 text-sm font-bold disabled:opacity-50 transition-all">
  <Save size={16} strokeWidth={2.5} />{mut.isPending ? 'Menyimpan...' : 'Simpan'}
  </button>
  </div>
@@ -132,40 +132,40 @@ export default function TemplateForm() {
  <div className="grid lg:grid-cols-2 gap-6">
  <div className="space-y-4">
  <Card className="p-5 space-y-4">
- <h3 className="text-sm font-bold text-charcoal">Info Template</h3>
+ <h3 className="text-sm font-bold text-charcoal dark:text-gray-100">Info Template</h3>
  <div>
- <label className="block text-sm font-bold text-slate-700 mb-1.5">Nama</label>
+ <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Nama</label>
  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Photocard Aesthetic"
- className="w-full px-4 py-2.5 rounded-xl border border-border-subtle text-sm bg-white focus:shadow-[0px_0px_0px] focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none transition-all" />
+ className="w-full px-4 py-2.5 rounded-xl border border-border-subtle text-sm bg-white dark:bg-gray-900 focus:shadow-[0px_0px_0px] focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none transition-all" />
  </div>
  <div>
- <label className="block text-sm font-bold text-slate-700 mb-1.5">Deskripsi</label>
+ <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Deskripsi</label>
  <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2}
- className="w-full px-4 py-2.5 rounded-xl border border-border-subtle text-sm bg-white focus:shadow-[0px_0px_0px] focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none resize-none transition-all" />
+ className="w-full px-4 py-2.5 rounded-xl border border-border-subtle text-sm bg-white dark:bg-gray-900 focus:shadow-[0px_0px_0px] focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none resize-none transition-all" />
  </div>
  <div>
- <label className="block text-sm font-bold text-slate-700 mb-1.5">Layout</label>
+ <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Layout</label>
  <select value={form.layout} onChange={(e) => handleLayoutChange(e.target.value)}
- className="w-full px-4 py-2.5 rounded-xl border border-border-subtle text-sm bg-white focus:outline-none font-bold">
+ className="w-full px-4 py-2.5 rounded-xl border border-border-subtle text-sm bg-white dark:bg-gray-900 focus:outline-none font-bold">
  {layouts.map((l) => <option key={l.value} value={l.value}>{l.label} ({l.w}×{l.h}, {l.slots} foto)</option>)}
  </select>
  </div>
  <div className="grid grid-cols-2 gap-3">
  <div>
- <label className="block text-sm font-bold text-slate-700 mb-1.5">Width</label>
+ <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Width</label>
  <input type="number" value={form.canvasWidth} readOnly className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 font-bold" />
  </div>
  <div>
- <label className="block text-sm font-bold text-slate-700 mb-1.5">Height</label>
+ <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Height</label>
  <input type="number" value={form.canvasHeight} readOnly className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 font-bold" />
  </div>
  </div>
  <div className="flex gap-4">
- <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+ <label className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-gray-200">
  <input type="checkbox" checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} className="rounded accent-rose-400" />
  Aktif
  </label>
- <label className="flex items-center gap-2 text-sm font-bold text-slate-700">
+ <label className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-gray-200">
  <input type="checkbox" checked={form.isPremium} onChange={(e) => setForm({ ...form, isPremium: e.target.checked })} className="rounded accent-rose-400" />
  Premium
  </label>
@@ -173,40 +173,40 @@ export default function TemplateForm() {
  </Card>
 
  <Card className="p-5 space-y-4">
- <h3 className="text-sm font-bold text-charcoal">Upload Gambar</h3>
+ <h3 className="text-sm font-bold text-charcoal dark:text-gray-100">Upload Gambar</h3>
  <div>
- <label className="block text-sm font-bold text-slate-700 mb-1.5">Overlay / Frame (PNG transparan)</label>
- <p className="text-xs text-slate-400 mb-2">Area transparan = tempat foto user muncul.</p>
+ <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Overlay / Frame (PNG transparan)</label>
+ <p className="text-xs text-slate-400 dark:text-gray-500 mb-2">Area transparan = tempat foto user muncul.</p>
  {overlayPreview ? (
  <div className="relative rounded-xl border border-border-subtle overflow-hidden">
  <img src={overlayPreview} alt="Overlay" className="w-full max-h-48 object-contain bg-slate-100" />
  <button onClick={() => { setOverlayFile(null); setOverlayPreview(null) }}
- className="absolute top-2 right-2 w-7 h-7 rounded-lg bg-white border border-border-subtle flex items-center justify-center text-charcoal">
+ className="absolute top-2 right-2 w-7 h-7 rounded-lg bg-white dark:bg-gray-900 border border-border-subtle flex items-center justify-center text-charcoal dark:text-gray-100">
  <X size={14} strokeWidth={3} />
  </button>
  </div>
  ) : (
  <label className="block border border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-rose-400 transition-colors cursor-pointer">
- <Upload size={20} className="mx-auto text-slate-400 mb-1" />
- <p className="text-xs text-slate-400 font-medium">Klik untuk upload PNG</p>
+ <Upload size={20} className="mx-auto text-slate-400 dark:text-gray-500 mb-1" />
+ <p className="text-xs text-slate-400 dark:text-gray-500 font-medium">Klik untuk upload PNG</p>
  <input type="file" accept="image/png" className="hidden" onChange={handleOverlayUpload} />
  </label>
  )}
  </div>
  <div>
- <label className="block text-sm font-bold text-slate-700 mb-1.5">Background Image (opsional)</label>
+ <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Background Image (opsional)</label>
  {bgPreview ? (
  <div className="relative rounded-xl border border-border-subtle overflow-hidden">
  <img src={bgPreview} alt="Background" className="w-full max-h-32 object-contain bg-slate-100" />
  <button onClick={() => { setBgFile(null); setBgPreview(null) }}
- className="absolute top-2 right-2 w-7 h-7 rounded-lg bg-white border border-border-subtle flex items-center justify-center text-charcoal">
+ className="absolute top-2 right-2 w-7 h-7 rounded-lg bg-white dark:bg-gray-900 border border-border-subtle flex items-center justify-center text-charcoal dark:text-gray-100">
  <X size={14} strokeWidth={3} />
  </button>
  </div>
  ) : (
  <label className="block border border-dashed border-slate-300 rounded-xl p-4 text-center hover:border-rose-400 transition-colors cursor-pointer">
- <Upload size={16} className="mx-auto text-slate-400 mb-1" />
- <p className="text-xs text-slate-400 font-medium">Upload gambar background</p>
+ <Upload size={16} className="mx-auto text-slate-400 dark:text-gray-500 mb-1" />
+ <p className="text-xs text-slate-400 dark:text-gray-500 font-medium">Upload gambar background</p>
  <input type="file" accept="image/*" className="hidden" onChange={handleBgUpload} />
  </label>
  )}
@@ -215,18 +215,18 @@ export default function TemplateForm() {
  </div>
 
  <Card className="p-5">
- <h3 className="text-sm font-bold text-charcoal mb-4">Preview</h3>
+ <h3 className="text-sm font-bold text-charcoal dark:text-gray-100 mb-4">Preview</h3>
  <div className="aspect-[3/4] bg-slate-50 rounded-xl border border-dashed border-slate-300 flex items-center justify-center overflow-hidden">
  {overlayPreview ? (
  <img src={overlayPreview} alt="Preview" className="w-full h-full object-contain" />
  ) : (
  <div className="text-center p-6">
  <Upload size={40} className="mx-auto text-slate-300 mb-2" />
- <p className="text-sm text-slate-400 font-medium">Upload overlay untuk preview</p>
+ <p className="text-sm text-slate-400 dark:text-gray-500 font-medium">Upload overlay untuk preview</p>
  </div>
  )}
  </div>
- <div className="mt-4 p-3 rounded-lg bg-rose-50 border border-dashed border-rose-200">
+ <div className="mt-4 p-3 rounded-lg bg-rose-50 dark:bg-rose-950/30 border border-dashed border-rose-200">
  <p className="text-xs font-bold text-rose-700 mb-1">Tips:</p>
  <ul className="text-xs text-rose-600 space-y-0.5">
  <li>• Area <strong>transparan</strong> di overlay = tempat foto</li>

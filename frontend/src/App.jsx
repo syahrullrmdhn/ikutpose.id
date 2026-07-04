@@ -10,7 +10,6 @@ import EventLanding from './features/events/EventLanding'
 import EventGallery from './features/events/EventGallery'
 import EventBoothPage from './features/events/EventBoothPage'
 import LoginPage from './features/auth/LoginPage'
-import RegisterPage from './features/auth/RegisterPage'
 import ProfilePage from './features/auth/ProfilePage'
 import AdminLayout from './components/layout/AdminLayout'
 import Dashboard from './features/admin/dashboard/Dashboard'
@@ -36,7 +35,6 @@ export default function App() {
  <Route path="/events" element={<PublicEvents />} />
  <Route path="/gallery" element={<PublicGallery />} />
  <Route path="/login" element={<LoginPage />} />
- <Route path="/register" element={<RegisterPage />} />
  <Route path="/profile" element={<ProfilePage />} />
  <Route path="/about" element={<AboutPage />} />
  <Route path="/pricing" element={<PricingPage />} />
