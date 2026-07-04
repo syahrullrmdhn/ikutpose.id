@@ -1,0 +1,62 @@
+name: Build & Deploy Ikutpose.id
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pdo, pdo_mysql, gd, zip
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install PHP dependencies
+        working-directory: backend
+        run: |
+          composer install --no-dev --optimize-autoloader
+
+      - name: Install & build frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy to VM2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VM2_HOST }}
+          port: ${{ secrets.VM2_SSH_PORT }}
+          username: ${{ secrets.VM2_SSH_USER }}
+          password: ${{ secrets.VM2_SSH_PASS }}
+          source: "backend/,frontend/dist/"
+          target: "/var/www/ikutpose.id/"
+          strip_components: 0
+
+      - name: Post-deploy commands
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.VM2_HOST }}
+          port: ${{ secrets.VM2_SSH_PORT }}
+          username: ${{ secrets.VM2_SSH_USER }}
+          password: ${{ secrets.VM2_SSH_PASS }}
+          script: |
+            cd /var/www/ikutpose.id/backend
+            php artisan config:clear
+            php artisan cache:clear
+            php artisan view:clear
+            php artisan migrate --force
+            cd /var/www/ikutpose.id
+            pm2 restart ikutpose-queue
+            echo "Deploy OK"
