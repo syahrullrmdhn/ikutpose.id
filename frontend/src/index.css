@@ -77,3 +77,151 @@ body {
   outline: none;
   box-shadow: 0 0 0 3px rgba(196, 145, 155, 0.35);
 }
+
+/* Confetti Animations */
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes sparklePop {
+  0% {
+    transform: scale(0) rotate(-10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    transform: scale3d(.9, .9, .9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    transform: scale3d(.97, .97, .97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes fadeInDelay {
+  0% { opacity: 0; transform: translateY(10px); }
+  80% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.animate-confetti-fall {
+  position: absolute;
+  top: -20px;
+  animation: confettiFall linear forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.animate-sparkle-pop {
+  animation: sparklePop 0.8s ease-out forwards;
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.8s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+.animate-fade-in-delay {
+  animation: fadeInDelay 1.2s ease-out forwards;
+}
+
+.animate-sparkle-twinkle {
+  animation: sparkleTwinkle 1.5s ease-in-out infinite;
+}
+
+/* Loading Bar Animation */
+@keyframes loadingBar {
+  0% { width: 0%; }
+  30% { width: 40%; }
+  60% { width: 75%; }
+  90% { width: 95%; }
+  100% { width: 100%; }
+}
+
+.animate-loading-bar {
+  animation: loadingBar 2.5s ease-in-out forwards;
+}
+
+/* Sticker Animations */
+@keyframes stickerBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.1); }
+}
+
+@keyframes stickerPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+@keyframes stickerWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes stickerFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes stickerGlow {
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(255, 107, 157, 0.5)); }
+  50% { filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.9)); }
+}
+
+.sticker-bounce { animation: stickerBounce 0.6s ease-in-out infinite; }
+.sticker-pulse { animation: stickerPulse 1.5s ease-in-out infinite; }
+.sticker-wiggle { animation: stickerWiggle 1s ease-in-out infinite; }
+.sticker-float { animation: stickerFloat 2s ease-in-out infinite; }
+.sticker-glow { animation: stickerGlow 2s ease-in-out infinite; }
+.sticker-rotate { animation: stickerWiggle 0.8s ease-in-out infinite; }
+
+/* Photo Beautify CSS Filters */
+.filter-glow { filter: brightness(1.1) contrast(1.05) saturate(1.1); }
+.filter-smooth { filter: brightness(1.08) contrast(0.95) saturate(1.05) blur(0.5px); }
+.filter-warm { filter: brightness(1.05) sepia(0.1) saturate(1.2); }
+.filter-cool { filter: brightness(1.05) hue-rotate(10deg) saturate(1.1); }
+.filter-vivid { filter: brightness(1.1) contrast(1.1) saturate(1.3); }
+.filter-soft { filter: brightness(1.1) contrast(0.9) saturate(1.05); }

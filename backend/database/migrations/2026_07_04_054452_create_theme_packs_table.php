@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_sticker_pack', function (Blueprint $table) {
-            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('sticker_pack_id')->constrained()->cascadeOnDelete();
-            $table->primary(['event_id', 'sticker_pack_id']);
+        Schema::create('theme_packs', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_sticker_pack');
+        Schema::dropIfExists('theme_packs');
     }
 };

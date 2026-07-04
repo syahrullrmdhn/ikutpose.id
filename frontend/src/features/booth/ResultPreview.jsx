@@ -1,177 +1,253 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Download, Share2, RotateCcw, Printer, ChevronDown, Lock } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import { useBoothStore } from '../../stores/boothStore'
-import { useAuthStore } from '../../stores/authStore'
-import { PRINT_SIZES, generatePrintCanvas, downloadCanvas, printCanvas } from '../../utils/printHelper'
+import { Download, Share2, Camera, RotateCcw } from 'lucide-react'
+import Confetti from './Confetti'
 
-export default function ResultPreview() {
-  const { photos, selectedTemplate, appliedFilter, appliedOverlay, appliedStickers, reset, setStep } = useBoothStore()
-  const { isAuthenticated } = useAuthStore()
-  const [printSize, setPrintSize] = useState(PRINT_SIZES[0])
-  const [showSizePicker, setShowSizePicker] = useState(false)
-  const [processing, setProcessing] = useState(false)
-
-  const template = selectedTemplate
-  const slots = template?.photo_slots || []
-  const canvasW = template?.canvas_width || 600
-  const canvasH = template?.canvas_height || 1800
-  const previewWidth = 280
-  const previewHeight = (canvasH / canvasW) * previewWidth
-
-  // Convert overlay SVG to data URL
-  const getOverlaySrc = (overlay) => {
-    if (!overlay || !overlay.svg) return null
-    return 'data:image/svg+xml;base64,' + btoa(overlay.svg)
-  }
-
-  const handleDownload = async (format = 'jpeg') => {
-    if (!isAuthenticated) return
-    setProcessing(true)
+// Sound effects using Web Audio API
+function useSound() {
+  const playSound = (type) => {
     try {
-      const canvas = await generatePrintCanvas({
-        photos, template, printSize,
-        filter: appliedFilter, stickers: appliedStickers,
-        overlay: appliedOverlay,
-        overlaySrc: printSize?.overlay || null,
-      })
-      downloadCanvas(canvas, `ikutpose-${Date.now()}`, format)
-    } catch (e) { console.error(e) }
-    finally { setProcessing(false) }
-  }
+      const ctx = new (window.AudioContext || window.webkitAudioContext)()
+      const oscillator = ctx.createOscillator()
+      const gainNode = ctx.createGain()
+      oscillator.connect(gainNode)
+      gainNode.connect(ctx.destination)
 
-  const handlePrint = async () => {
-    if (!isAuthenticated) return
-    setProcessing(true)
-    try {
-      const canvas = await generatePrintCanvas({
-        photos, template, printSize,
-        filter: appliedFilter, stickers: appliedStickers,
-        overlay: appliedOverlay,
-        overlaySrc: printSize?.overlay || null,
-      })
-      printCanvas(canvas, printSize)
-    } catch (e) { console.error(e) }
-    finally { setProcessing(false) }
-  }
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      await navigator.share({ title: 'IkutPose — Foto Saya', text: 'Lihat foto photobooth saya!', url: window.location.href })
+      switch (type) {
+        case 'shutter':
+          oscillator.type = 'square'
+          oscillator.frequency.setValueAtTime(800, ctx.currentTime)
+          oscillator.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.1)
+          gainNode.gain.setValueAtTime(0.3, ctx.currentTime)
+          gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1)
+          oscillator.start(ctx.currentTime)
+          oscillator.stop(ctx.currentTime + 0.1)
+          break
+        case 'sparkle':
+          oscillator.type = 'sine'
+          oscillator.frequency.setValueAtTime(1200, ctx.currentTime)
+          oscillator.frequency.exponentialRampToValueAtTime(2400, ctx.currentTime + 0.3)
+          gainNode.gain.setValueAtTime(0.15, ctx.currentTime)
+          gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5)
+          oscillator.start(ctx.currentTime)
+          oscillator.stop(ctx.currentTime + 0.5)
+          break
+        case 'success':
+          const notes = [523, 659, 784, 1047]
+          notes.forEach((freq, i) => {
+            const osc = ctx.createOscillator()
+            const gain = ctx.createGain()
+            osc.connect(gain)
+            gain.connect(ctx.destination)
+            osc.type = 'sine'
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12)
+            gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.12)
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.12 + 0.2)
+            osc.start(ctx.currentTime + i * 0.12)
+            osc.stop(ctx.currentTime + i * 0.12 + 0.2)
+          })
+          break
+        default:
+          break
+      }
+    } catch (e) {
+      // Audio not supported
     }
   }
 
+  return playSound
+}
+
+export default function ResultPreview() {
+  const { photos, template, step, prevStep, resetBooth } = useBoothStore()
+  const canvasRef = useCanvas(photos, template)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const [downloaded, setDownloaded] = useState(false)
+  const playSound = useSound()
+
+  useEffect(() => {
+    playSound('success')
+    setShowConfetti(true)
+    const timer = setTimeout(() => setShowConfetti(false), 3000)
+    return () => clearTimeout(timer)
+  }, [playSound])
+
+  const handleDownload = () => {
+    if (!canvasRef.current) return
+    playSound('sparkle')
+    const link = document.createElement('a')
+    link.download = `ikutpose-${Date.now()}.png`
+    link.href = canvasRef.current.toDataURL('image/png')
+    link.click()
+    setDownloaded(true)
+  }
+
+  const handleShare = async () => {
+    if (!canvasRef.current) return
+    try {
+      const blob = await new Promise(resolve => canvasRef.current.toBlob(resolve, 'image/png'))
+      if (!blob) {
+        handleDownload()
+        return
+      }
+
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Foto dari ikutpose.id',
+          text: 'Lihat foto photobooth aku! 📸',
+          files: [new File([blob], 'ikutpose.png', { type: 'image/png' })]
+        })
+      } else {
+        handleDownload()
+      }
+    } catch (err) {
+      handleDownload()
+    }
+  }
+
+  const handleRetake = () => {
+    resetBooth()
+    window.location.reload()
+  }
+
   return (
-    <div className="max-w-2xl w-full text-center">
-      <h2 className="text-2xl font-extrabold mb-2">Foto Siap!</h2>
-      <p className="text-warm-gray font-medium mb-6">
-        {template?.name} &middot; {canvasW}&times;{canvasH}px &middot; {photos.length} foto
-        {appliedOverlay && appliedOverlay.id !== 'none' && <> &middot; <span className="text-dusty-pink">{appliedOverlay.name}</span></>}
-        {appliedFilter && <> &middot; <span className="text-purple-500">{appliedFilter.name}</span></>}
-      </p>
-
-      {/* Preview */}
-      <div className="inline-block mb-6">
-        <div className="bg-white rounded-xl border border-border-subtle shadow-card p-4">
-          <div className="relative overflow-hidden rounded-md"
-            style={{ width: previewWidth, height: previewHeight, backgroundColor: template?.background_color || '#f5f5f5', filter: appliedFilter?.css || 'none' }}>
-            {slots.map((slot, i) => {
-              if (!photos[i]) return null
-              const scaleX = previewWidth / canvasW
-              const scaleY = previewHeight / canvasH
-              return (
-                <div key={i} className="absolute overflow-hidden"
-                  style={{ left: slot.x * scaleX, top: slot.y * scaleY, width: slot.width * scaleX, height: slot.height * scaleY, borderRadius: (slot.borderRadius || 0) * Math.min(scaleX, scaleY) }}>
-                  <img src={photos[i]} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
-                </div>
-              )
-            })}
-
-            {/* Overlay */}
-            {appliedOverlay && appliedOverlay.svg && (
-              <img
-                src={getOverlaySrc(appliedOverlay)}
-                alt=""
-                className="absolute inset-0 w-full h-full pointer-events-none"
-                style={{ objectFit: 'fill', mixBlendMode: 'screen' }}
-              />
-            )}
-
-            {/* Template frame overlay */}
-            {template?.overlay_image && <img src={template.overlay_image} alt="" className="absolute inset-0 w-full h-full pointer-events-none" style={{ objectFit: 'fill' }} onError={(e) => e.target.style.display = 'none'} />}
+    <div className="w-full max-w-2xl mx-auto">
+      {showConfetti && <Confetti />}
+      
+      <div className="bg-white rounded-2xl shadow-card p-8 space-y-6 relative overflow-hidden">
+        {/* Celebration Banner */}
+        <div className="text-center">
+          <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-dusty-pink/10 via-dusty-pink/20 to-dusty-pink/10 rounded-full">
+            <span className="animate-sparkle-twinkle text-lg">✨</span>
+            <h2 className="text-2xl font-bold text-text-primary">Foto Siap!</h2>
+            <span className="animate-sparkle-twinkle text-lg" style={{ animationDelay: '0.5s' }}>✨</span>
           </div>
+          <p className="text-text-muted mt-2">Cantik banget hasilnya! 🎀</p>
         </div>
-        <div className="mt-2 flex items-center justify-center gap-3 text-xs text-slate-400 font-medium flex-wrap">
-          <span>{template?.layout?.replace('_', ' ')}</span><span>&middot;</span><span>{photos.length} foto</span>
-          {appliedFilter && <><span>&middot;</span><span className="text-purple-500">{appliedFilter.name}</span></>}
-          {appliedOverlay && appliedOverlay.id !== 'none' && <><span>&middot;</span><span className="text-dusty-pink">{appliedOverlay.name}</span></>}
-          {appliedStickers.length > 0 && <><span>&middot;</span><span>{appliedStickers.length} sticker</span></>}
-        </div>
-      </div>
 
-      {/* Login required notice */}
-      {!isAuthenticated && (
-        <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-300 border-dashed max-w-sm mx-auto">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Lock size={16} className="text-rose-500" />
-            <p className="text-sm font-bold text-rose-700">Login diperlukan</p>
+        {/* Photo Preview */}
+        <div className="relative">
+          <div className="mx-auto max-w-sm shadow-2xl rounded-lg overflow-hidden ring-4 ring-white ring-offset-4 ring-offset-dusty-pink/10">
+            <canvas ref={canvasRef} className="w-full" />
           </div>
-          <p className="text-xs text-rose-600 mb-3">Masuk atau daftar untuk download dan cetak foto</p>
-          <div className="flex gap-2 justify-center">
-            <Link to="/login" className="px-5 py-2 rounded-lg bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card-hover text-charcoal font-bold text-sm transition-all">
-              Login
-            </Link>
-            <Link to="/register" className="px-5 py-2 rounded-lg bg-white border border-border-subtle shadow-card hover:shadow-card-hover text-charcoal font-bold text-sm transition-all">
-              Daftar
-            </Link>
-          </div>
+          {/* Glow effect behind photo */}
+          <div className="absolute inset-0 -z-10 blur-3xl opacity-20 bg-dusty-pink rounded-full" />
         </div>
-      )}
 
-      {/* Print size selector */}
-      {isAuthenticated && (
-        <div className="mb-6">
-          <p className="text-xs font-bold text-warm-gray uppercase tracking-wider mb-2">Ukuran Cetak</p>
-          <div className="relative inline-block">
-            <button onClick={() => setShowSizePicker(!showSizePicker)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-border-subtle shadow-card hover:shadow-card text-sm font-bold text-charcoal transition-all">
-              {printSize.label}
-              <ChevronDown size={16} className={`transition-transform ${showSizePicker ? 'rotate-180' : ''}`} />
-            </button>
-            {showSizePicker && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-white rounded-xl border border-border-subtle shadow-card z-10 overflow-hidden">
-                {PRINT_SIZES.map((size) => (
-                  <button key={size.id} onClick={() => { setPrintSize(size); setShowSizePicker(false) }}
-                    className={`w-full text-left px-4 py-3 text-sm font-medium hover:bg-rose-50 border-b border-slate-100 last:border-0 ${printSize.id === size.id ? 'bg-rose-100 font-bold' : ''}`}>
-                    <span className="text-charcoal">{size.label}</span>
-                    <span className="block text-xs text-slate-400 mt-0.5">{size.px_w} &times; {size.px_h} px @ 300 DPI{size.overlay ? ' + frame' : ''}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        {/* Photo Info */}
+        <div className="flex justify-center gap-6 text-sm text-text-muted">
+          <span>{template?.name || 'Photo Strip'}</span>
+          <span>·</span>
+          <span>{template?.canvas_width}×{template?.canvas_height}</span>
+          <span>·</span>
+          <span>{photos?.length || 4} foto</span>
         </div>
-      )}
 
-      {/* Action buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        <button onClick={() => handleDownload('jpeg')} disabled={processing || !isAuthenticated}
-          className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal font-bold transition-all disabled:opacity-40 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0">
-          <Download size={18} strokeWidth={2.5} />
-          {processing ? 'Memproses...' : 'Download JPG'}
-        </button>
-        <button onClick={handlePrint} disabled={processing || !isAuthenticated}
-          className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-slate-900 text-white border border-border-subtle shadow-card hover:shadow-card font-bold transition-all disabled:opacity-40 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0">
-          <Printer size={18} strokeWidth={2.5} />
-          Cetak Foto
+        {/* Action Buttons */}
+        <div className="flex gap-3">
+          <button
+            onClick={handleDownload}
+            className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
+              downloaded
+                ? 'bg-emerald-500 text-white'
+                : 'bg-dusty-pink hover:bg-rose-500 text-white'
+            }`}
+          >
+            <Download size={20} />
+            {downloaded ? 'Tersimpan ✨' : 'Download'}
+          </button>
+          <button
+            onClick={handleShare}
+            className="flex-1 px-4 py-3 rounded-lg bg-charcoal hover:bg-slate-800 text-white font-semibold transition-all flex items-center justify-center gap-2"
+          >
+            <Share2 size={20} />
+            Share
+          </button>
+          <button
+            onClick={handleRetake}
+            className="px-4 py-3 rounded-lg border border-border-subtle hover:border-border-default text-charcoal font-semibold transition-all flex items-center justify-center gap-2"
+          >
+            <RotateCcw size={20} />
+          </button>
+        </div>
+
+        {/* Back Button */}
+        <button
+          onClick={() => prevStep()}
+          className="w-full text-center py-2 text-text-muted hover:text-charcoal transition-colors text-sm"
+        >
+          ← Kembali ke edit
         </button>
       </div>
-
-      <button onClick={() => { reset(); setStep(1) }}
-        className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-charcoal transition-colors">
-        <RotateCcw size={14} strokeWidth={2.5} />
-        Foto Lagi
-      </button>
     </div>
   )
+}
+
+// Canvas hook to render the final composite
+function useCanvas(photos, template) {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    if (!template || !photos?.length) return
+    const canvas = canvasRef.current
+    if (!canvas) return
+    
+    canvas.width = template.canvas_width
+    canvas.height = template.canvas_height
+    const ctx = canvas.getContext('2d')
+
+    // Draw background
+    ctx.fillStyle = template.background_color || '#ffffff'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    // Load and draw photos into slots
+    const slots = template.photo_slots || []
+    photos.forEach((photo, index) => {
+      if (index < slots.length) {
+        const slot = slots[index]
+        const img = new Image()
+        img.crossOrigin = 'anonymous'
+        img.onload = () => {
+          // Draw photo with border radius
+          ctx.save()
+          drawRoundedRect(ctx, slot.x, slot.y, slot.width, slot.height, slot.borderRadius || 0)
+          ctx.clip()
+          ctx.drawImage(img, slot.x, slot.y, slot.width, slot.height)
+          
+          // Draw slot border
+          ctx.strokeStyle = '#ffffff'
+          ctx.lineWidth = 4
+          ctx.stroke()
+          ctx.restore()
+        }
+        img.src = photo
+      }
+    })
+
+    // Load and draw template overlay (frame)
+    if (template.overlay_image) {
+      const overlay = new Image()
+      overlay.crossOrigin = 'anonymous'
+      overlay.onload = () => {
+        ctx.drawImage(overlay, 0, 0, canvas.width, canvas.height)
+      }
+      overlay.src = template.overlay_image
+    }
+  }, [photos, template])
+
+  return canvasRef
+}
+
+function drawRoundedRect(ctx, x, y, w, h, r) {
+  ctx.beginPath()
+  ctx.moveTo(x + r, y)
+  ctx.lineTo(x + w - r, y)
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r)
+  ctx.lineTo(x + w, y + h - r)
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h)
+  ctx.lineTo(x + r, y + h)
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r)
+  ctx.lineTo(x, y + r)
+  ctx.quadraticCurveTo(x, y, x + r, y)
+  ctx.closePath()
 }

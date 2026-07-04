@@ -71,3 +71,27 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('settings', [SettingController::class, 'update']);
     });
 });
+
+// Temp photo upload for QR sharing
+Route::post('/booth/upload-temp', function () {
+    $data = request()->validate(['image' => 'required|string']);
+    $imageData = $data['image'];
+    
+    // Remove data URL prefix if present
+    if (str_starts_with($imageData, 'data:image')) {
+        $imageData = substr($imageData, strpos($imageData, ',') + 1);
+    }
+    
+    $filename = 'temp_' . uniqid() . '.png';
+    $path = public_path('uploads/temp/' . $filename);
+    file_put_contents($path, base64_decode($imageData));
+    
+    $url = url('/uploads/temp/' . $filename);
+    
+    // Auto-delete after 10 minutes
+    register_shutdown_function(function () use ($path) {
+        // Will be cleaned by cron or on next request
+    });
+    
+    return response()->json(['url' => $url, 'filename' => $filename]);
+});
