@@ -32,8 +32,8 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin Utama',
-            'email' => 'admin@ikutpose.com',
-            'password' => 'password',
+            'email' => 'admin@ikutpose.id',
+            'password' => 'admin123',
             'role' => 'admin',
             'is_active' => true,
         ]);
@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             User::create([
                 'name' => "Operator {$i}",
                 'email' => "operator{$i}@ikutpose.com",
-                'password' => 'password',
+                'password' => 'admin123',
                 'role' => 'operator',
                 'is_active' => true,
             ]);
@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
             User::create([
                 'name' => $user['name'],
                 'email' => $user['email'],
-                'password' => 'password',
+                'password' => 'admin123',
                 'role' => 'user',
                 'is_active' => true,
             ]);
@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedTemplates(): void
     {
-        $admin = User::where('email', 'admin@ikutpose.com')->first();
+        $admin = User::where('email', 'admin@ikutpose.id')->first();
 
         $templates = [
             [
@@ -353,7 +353,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedEvents(): void
     {
-        $admin = User::where('email', 'admin@ikutpose.com')->first();
+        $admin = User::where('email', 'admin@ikutpose.id')->first();
         $templates = Template::all();
 
         $events = [
