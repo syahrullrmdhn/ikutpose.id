@@ -52,6 +52,8 @@ export const useBoothStore = create((set, get) => ({
 
   setSessionUuid: (uuid) => set({ sessionUuid: uuid }),
 
+  setPhotos: (photos) => set({ photos }),
+
   reset: () =>
     set({
       step: 1,

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useBoothStore } from '../../stores/boothStore'
 import { Download, Share2, Camera, RotateCcw } from 'lucide-react'
 import Confetti from './Confetti'
@@ -59,7 +59,7 @@ function useSound() {
 }
 
 export default function ResultPreview() {
-  const { photos, template, step, prevStep, resetBooth } = useBoothStore()
+  const { photos, template, step, prevStep, reset } = useBoothStore()
   const canvasRef = useCanvas(photos, template)
   const [showConfetti, setShowConfetti] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
@@ -106,7 +106,7 @@ export default function ResultPreview() {
   }
 
   const handleRetake = () => {
-    resetBooth()
+    reset()
     window.location.reload()
   }
 
