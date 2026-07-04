@@ -88,12 +88,9 @@ export default function LoginPage() {
  </button>
  </form>
 
- <div className="mt-6 flex flex-col gap-3 border-t border-border-subtle dark:border-gray-800 pt-6 text-sm text-warm-gray dark:text-gray-400 sm:flex-row sm:items-center sm:justify-between">
+ <div className="mt-6 border-t border-border-subtle dark:border-gray-800 pt-6 text-sm text-warm-gray dark:text-gray-400">
  <Link to="/" className="font-semibold hover:text-charcoal dark:hover:text-white transition-colors">
  &larr; Kembali ke beranda
- </Link>
- <Link to="/register" className="font-semibold text-deep-rose dark:text-rose-200 hover:opacity-80 transition-opacity">
- Belum punya akun? Daftar
  </Link>
  </div>
  </div>
