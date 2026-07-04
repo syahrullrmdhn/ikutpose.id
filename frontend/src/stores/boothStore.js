@@ -6,11 +6,14 @@ export const useBoothStore = create((set, get) => ({
   photos: [],
   currentSlot: 0,
   appliedFilter: null,
+  appliedOverlay: null,
   appliedStickers: [],
   textOverlays: [],
   sessionUuid: null,
 
   setStep: (step) => set({ step }),
+  nextStep: () => set((s) => ({ step: Math.min(s.step + 1, 4) })),
+  prevStep: () => set((s) => ({ step: Math.max(s.step - 1, 1) })),
   setTemplate: (template) => set({ selectedTemplate: template, step: 2 }),
 
   addPhoto: (photo) => {
@@ -31,6 +34,7 @@ export const useBoothStore = create((set, get) => ({
   },
 
   setFilter: (filter) => set({ appliedFilter: filter }),
+  setOverlay: (overlay) => set({ appliedOverlay: overlay }),
 
   addSticker: (sticker) =>
     set((s) => ({ appliedStickers: [...s.appliedStickers, sticker] })),
@@ -55,6 +59,7 @@ export const useBoothStore = create((set, get) => ({
       photos: [],
       currentSlot: 0,
       appliedFilter: null,
+      appliedOverlay: null,
       appliedStickers: [],
       textOverlays: [],
       sessionUuid: null,

@@ -1,188 +1,133 @@
-import { useState, useCallback } from 'react'
-import Webcam from 'react-webcam'
-import { Camera, FlipHorizontal2, X, RefreshCw, Video, ChevronDown } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
 import { useBoothStore } from '../../stores/boothStore'
-import { useCamera } from '../../hooks/useCamera'
-import { useCountdown } from '../../hooks/useCountdown'
+import CameraControls from './CameraControls'
 
 export default function CameraCapture() {
- const { selectedTemplate, photos, addPhoto, retakePhoto, setStep } = useBoothStore()
- const {
- webcamRef, mirrored, toggleMirror, switchCamera, selectCamera,
- videoConstraints, error: cameraError,
- devices, isMobile, isTablet, isDesktop, hasMultipleCameras, currentDeviceLabel, facingMode, orientation,
- } = useCamera()
- const { count, isRunning, start } = useCountdown(3)
- const [flash, setFlash] = useState(false)
- const [showDevices, setShowDevices] = useState(false)
+  const { photos, selectedTemplate, appliedOverlay, addPhoto, prevStep, nextStep } = useBoothStore()
+  const [showCamera, setShowCamera] = useState(false)
 
- const slots = selectedTemplate?.photo_slots || []
- const maxSlots = slots.length || 4
- const allDone = photos.length >= maxSlots
+  // For strip/grid templates, use INDIVIDUAL SLOT aspect ratio
+  // Camera captures one photo at a time that fits into ONE slot
+  const slots = selectedTemplate?.photo_slots || []
+  const targetAspectRatio = slots.length > 0 
+    ? slots[0].width / slots[0].height 
+    : 1
 
- const currentSlot = slots[photos.length] || slots[0] || { width: 490, height: 790 }
- const isPortrait = orientation === 'portrait'
- const isVerticalLayout = isPortrait && isMobile
+  const handleCapture = (imageData, filter) => {
+    addPhoto(imageData)
+    setShowCamera(false)
+    
+    const maxSlots = slots.length || 4
+    if (photos.length + 1 >= maxSlots) {
+      setTimeout(() => nextStep(), 500)
+    }
+  }
 
- // Camera: natural aspect ratio, tidak dipaksa
- // Desktop: landscape 16:9 / 4:3 (tergantung webcam)
- // Mobile portrait: full height
- // Mobile landscape: full width
- const getCameraClass = () => {
- if (isDesktop) return 'aspect-video' // 16:9 natural webcam
- if (isMobile && isPortrait) return 'aspect-[3/4]' // portrait natural phone camera
- return 'aspect-video' // landscape
- }
+  if (showCamera) {
+    return (
+      <CameraControls
+        onClose={() => setShowCamera(false)}
+        onCapture={handleCapture}
+        aspectRatio={targetAspectRatio}
+        template={selectedTemplate}
+        overlay={appliedOverlay}
+      />
+    )
+  }
 
- // Capture foto ASLI tanpa crop — object-fit: cover di preview/download yang handle
- const handleCapture = useCallback(() => {
- start(() => {
- const webcam = webcamRef.current
- if (!webcam) return
- const screenshot = webcam.getScreenshot()
- if (!screenshot) return
+  const maxSlots = slots.length || 4
+  const progress = photos.length / maxSlots
 
- setFlash(true)
- setTimeout(() => setFlash(false), 300)
- addPhoto(screenshot) // Simpan asli, tanpa crop
- })
- }, [start, addPhoto, webcamRef])
+  return (
+    <div className="w-full max-w-2xl">
+      <div className="bg-white rounded-2xl shadow-card p-8 space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-charcoal mb-2">Ambil Foto</h2>
+          <p className="text-slate-600">
+            {photos.length < maxSlots 
+              ? `Foto ${photos.length + 1} dari ${maxSlots} — ${selectedTemplate?.name}`
+              : 'Semua foto sudah diambil!'}
+          </p>
+          {photos.length > 0 && (
+            <div className="mt-3 bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div className="h-full bg-dusty-pink transition-all" style={{ width: `${progress * 100}%` }} />
+            </div>
+          )}
+        </div>
 
- return (
- <div className="max-w-5xl w-full">
- <div className={`flex ${isVerticalLayout ? 'flex-col' : 'flex-col lg:flex-row'} gap-6`}>
- {/* Camera viewport */}
- <div className={isVerticalLayout ? 'w-full' : 'flex-1'}>
- <div className="flex items-center justify-between mb-2">
- <p className="text-xs font-bold text-warm-gray">
- Slot {photos.length + 1}: {currentSlot.width}×{currentSlot.height}px
- </p>
- <div className="flex items-center gap-2">
- {devices.length > 1 && (
- <div className="relative">
- <button onClick={() => setShowDevices(!showDevices)}
- className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-white border border-border-subtle text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors">
- <Video size={12} strokeWidth={2.5} />
- {currentDeviceLabel.length > 18 ? currentDeviceLabel.substring(0, 18) + '...' : currentDeviceLabel}
- <ChevronDown size={12} />
- </button>
- {showDevices && (
- <div className="absolute top-full right-0 mt-1 w-64 bg-white rounded-xl border border-border-subtle z-20 overflow-hidden">
- {devices.map((device, i) => (
- <button key={device.deviceId} onClick={() => { selectCamera(device.deviceId); setShowDevices(false) }}
- className="w-full text-left px-3 py-2.5 text-xs font-medium hover:bg-rose-50 border-b border-slate-100 last:border-0">
- {device.label || `Kamera ${i + 1}`}
- </button>
- ))}
- </div>
- )}
- </div>
- )}
- </div>
- </div>
-
- {cameraError && (
- <div className="mb-4 p-4 rounded-xl bg-red-50 border border-red-300 text-sm text-red-700 font-medium">{cameraError}</div>
- )}
-
- {/* Camera — natural, tidak dipaksa resolusi */}
- <div className={`relative rounded-xl overflow-hidden bg-slate-900 ${getCameraClass()} border border-border-subtle`}>
- <Webcam
- ref={webcamRef}
- mirrored={mirrored}
- screenshotFormat="image/jpeg"
- screenshotQuality={0.92}
- className="w-full h-full object-cover"
- videoConstraints={videoConstraints}
- />
-
- <AnimatePresence>
- {isRunning && count !== null && (
- <motion.div key={count} initial={{ scale: 1.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.5, opacity: 0 }} transition={{ duration: 0.4 }}
- className="absolute inset-0 flex items-center justify-center bg-slate-900/40">
- <span className="text-8xl font-extrabold text-white drop-shadow-lg">{count}</span>
- </motion.div>
- )}
- </AnimatePresence>
-
- {flash && <div className="absolute inset-0 bg-white animate-flash pointer-events-none" />}
-
- <div className="absolute top-4 left-4 bg-white/90 border border-border-subtle text-charcoal text-sm px-3 py-1.5 rounded-lg font-bold">
- Foto {Math.min(photos.length + 1, maxSlots)} dari {maxSlots}
- </div>
-
- <div className="absolute bottom-4 right-4 flex gap-2">
- <button onClick={toggleMirror}
- className="w-10 h-10 rounded-lg bg-white/90 border border-border-subtle text-charcoal flex items-center justify-center hover:bg-white transition-colors">
- <FlipHorizontal2 size={18} strokeWidth={2.5} />
- </button>
- {hasMultipleCameras && (
- <button onClick={switchCamera}
- className="w-10 h-10 rounded-lg bg-white/90 border border-border-subtle text-charcoal flex items-center justify-center hover:bg-white transition-colors">
- <RefreshCw size={18} strokeWidth={2.5} />
- </button>
- )}
- </div>
-
- {isMobile && (
- <div className="absolute top-4 right-4 bg-white/80 border border-slate-300 text-slate-700 text-[10px] px-2 py-1 rounded-md font-bold">
- {facingMode === 'user' ? 'Depan' : 'Belakang'}
- </div>
- )}
- </div>
-
- <p className="text-center text-[11px] text-slate-400 font-medium mt-2">
- Foto akan di-crop otomatis sesuai frame template saat download
- </p>
-
- <div className="flex justify-center mt-4">
- <button onClick={handleCapture} disabled={isRunning || allDone}
- className="w-16 h-16 rounded-full bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card-hover text-charcoal flex items-center justify-center disabled:opacity-40 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0 transition-all active:scale-95">
- <Camera size={28} strokeWidth={2.5} />
- </button>
- </div>
- </div>
-
- {/* Mini strip preview */}
- <div className={isVerticalLayout ? 'w-full' : 'lg:w-40'}>
- <p className="text-sm font-bold text-slate-700 mb-3">Foto tersimpan</p>
- <div className={`flex ${isVerticalLayout ? 'flex-row overflow-x-auto pb-2' : 'flex-wrap lg:flex-col'} gap-2`}>
- {slots.map((slot, i) => (
- <div key={i} className={`relative ${isVerticalLayout ? 'w-20 shrink-0' : 'w-16 lg:w-full'} rounded-lg overflow-hidden border border-border-subtle bg-white`}
- style={{ aspectRatio: slot.width / slot.height }}>
- {photos[i] ? (
- <>
- <img src={photos[i]} alt={`Foto ${i + 1}`} className="w-full h-full object-cover" />
- <button onClick={() => retakePhoto(i)}
- className="absolute top-1 right-1 w-5 h-5 rounded-md bg-slate-900/80 text-white flex items-center justify-center">
- <X size={12} strokeWidth={3} />
- </button>
- </>
- ) : (
- <div className="w-full h-full bg-rose-50 flex items-center justify-center">
- <Camera size={14} className="text-slate-300" />
- </div>
- )}
- <div className="absolute bottom-0 left-0 right-0 bg-slate-900/60 text-white text-[9px] font-bold text-center py-0.5">
- {slot.width}×{slot.height}
- </div>
- </div>
- ))}
- </div>
-
- <div className="mt-4 flex flex-col gap-2">
- <button onClick={() => setStep(1)} className="text-sm font-bold text-warm-gray hover:text-charcoal transition-colors">
- Ganti template
- </button>
- {allDone && (
- <button onClick={() => setStep(3)} className="text-sm font-bold text-rose-500 hover:text-rose-600 transition-colors">
- Lanjut Edit &rarr;
- </button>
- )}
- </div>
- </div>
- </div>
- </div>
- )
+        {photos.length > 0 ? (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              {photos.map((photo, idx) => (
+                <div key={idx} className="bg-slate-100 rounded-lg overflow-hidden aspect-square relative group">
+                  <img src={photo} alt={`Foto ${idx + 1}`} className="w-full h-full object-cover" />
+                  <div className="absolute top-2 left-2 bg-dusty-pink text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {idx + 1}
+                  </div>
+                </div>
+              ))}
+              {photos.length < maxSlots && (
+                <button
+                  onClick={() => setShowCamera(true)}
+                  className="aspect-square rounded-lg border-2 border-dashed border-slate-300 hover:border-dusty-pink transition-colors flex flex-col items-center justify-center gap-2 bg-slate-50 hover:bg-slate-100"
+                >
+                  <svg className="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <p className="text-sm font-semibold text-slate-600">Foto {photos.length + 1}</p>
+                </button>
+              )}
+            </div>
+            <div className="flex gap-3">
+              {photos.length < maxSlots ? (
+                <>
+                  <button
+                    onClick={() => setShowCamera(true)}
+                    className="flex-1 px-4 py-2 rounded-lg bg-dusty-pink hover:bg-rose-500 text-white font-semibold transition-colors"
+                  >
+                    Lanjut Foto ({photos.length}/{maxSlots})
+                  </button>
+                  <button
+                    onClick={() => prevStep()}
+                    className="px-4 py-2 rounded-lg border border-slate-300 hover:border-slate-400 text-charcoal font-semibold transition-colors"
+                  >
+                    Kembali
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => nextStep()}
+                  className="flex-1 px-4 py-2 rounded-lg bg-charcoal hover:bg-slate-800 text-white font-semibold transition-colors"
+                >
+                  Lanjut ke Edit →
+                </button>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <button
+              onClick={() => setShowCamera(true)}
+              className="w-full py-12 rounded-lg border-2 border-dashed border-slate-300 hover:border-dusty-pink transition-colors flex flex-col items-center justify-center gap-3 bg-slate-50 hover:bg-slate-100"
+            >
+              <svg className="w-16 h-16 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <div className="text-center">
+                <p className="text-lg font-semibold text-charcoal">Buka Kamera</p>
+                <p className="text-sm text-slate-600">Klik untuk memulai foto 1 dari {maxSlots}</p>
+              </div>
+            </button>
+            <button
+              onClick={() => prevStep()}
+              className="w-full px-4 py-2 rounded-lg border border-slate-300 hover:border-slate-400 text-charcoal font-semibold transition-colors"
+            >
+              Kembali
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
 }
