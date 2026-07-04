@@ -228,7 +228,8 @@ export default function PhotoEditor() {
 
               {/* GIF TAB */}
               {tab === 'gif' && <GIFBoomerangMode />}
-n              {/* QR CODE TAB */}
+
+              {/* QR CODE TAB */}
               {tab === "qrcode" && (
                 photos.length > 0 && <QRCodeDownload imageDataUrl={photos[0]} />
               )}
