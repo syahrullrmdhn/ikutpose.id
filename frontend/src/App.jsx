@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LandingPage from './features/landing/LandingPage'
 import AboutPage from './features/pages/AboutPage'
 import ContactPage from './features/pages/ContactPage'
+import PricingPage from './features/pages/PricingPage'
 import BoothPage from './features/booth/BoothPage'
 import PublicEvents from './features/events/PublicEvents'
 import PublicGallery from './features/gallery/PublicGallery'
@@ -38,6 +39,7 @@ export default function App() {
  <Route path="/register" element={<RegisterPage />} />
  <Route path="/profile" element={<ProfilePage />} />
  <Route path="/about" element={<AboutPage />} />
+ <Route path="/pricing" element={<PricingPage />} />
  <Route path="/contact" element={<ContactPage />} />
  <Route path="/events/:slug" element={<EventLanding />} />
  <Route path="/events/:slug/booth" element={<EventBoothPage />} />

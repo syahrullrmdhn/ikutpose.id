@@ -6,6 +6,7 @@ import { useAuthStore } from '../../stores/authStore'
 const links = [
  { label: 'Booth', href: '/booth' },
  { label: 'Events', href: '/events' },
+ { label: 'Pricing', href: '/pricing' },
  { label: 'Gallery', href: '/gallery' },
  { label: 'Tentang', href: '/about' },
  { label: 'Kontak', href: '/contact' },

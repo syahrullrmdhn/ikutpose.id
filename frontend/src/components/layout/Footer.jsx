@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 const links = [
  { label: 'Booth', href: '/booth' },
  { label: 'Events', href: '/events' },
+ { label: 'Pricing', href: '/pricing' },
  { label: 'Gallery', href: '/gallery' },
  { label: 'Tentang Kami', href: '/about' },
  { label: 'Hubungi Kami', href: '/contact' },
