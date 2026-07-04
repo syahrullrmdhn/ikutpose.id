@@ -36,7 +36,7 @@ export default function EventBoothPage() {
  return (
  <div className="min-h-screen bg-[#FAFAFA] dark:bg-gray-950 font-sans text-charcoal dark:text-gray-100 selection:bg-rose-300 flex flex-col">
  <Navbar />
- <div className="bg-white dark:bg-gray-900 border-b-2 border-soft-gray px-6 py-3 flex items-center justify-between">
+ <div className="bg-white dark:bg-gray-900 border-b-2 border-soft-gray dark:border-gray-800 px-6 py-3 flex items-center justify-between">
  <div className="flex items-center gap-3">
  <Link to={`/events/${slug}`} className="w-8 h-8 rounded-lg bg-white dark:bg-gray-900 border border-border-subtle shadow-card flex items-center justify-center text-charcoal dark:text-gray-100 hover:shadow-card-hover transition-all">
  <ArrowLeft size={14} strokeWidth={2.5} />
@@ -46,17 +46,17 @@ export default function EventBoothPage() {
  <span className="text-xs font-bold text-warm-gray dark:text-gray-400">Abadikan momen, ciptakan kenangan</span>
  </div>
 
- <div className="bg-white dark:bg-gray-900 border-b-2 border-soft-gray py-3 px-6">
+ <div className="bg-white dark:bg-gray-900 border-b-2 border-soft-gray dark:border-gray-800 py-3 px-6">
  <div className="max-w-4xl mx-auto flex items-center justify-between">
  {['Pilih Template', 'Ambil Foto', 'Edit & Hias', 'Download'].map((label, i) => {
  const num = i + 1
  return (
  <div key={num} className="flex items-center">
  <div className="flex items-center gap-2">
- <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold border border-border-subtle ${step >= num ? 'bg-dusty-pink text-white text-charcoal dark:text-gray-100 shadow-card' : 'bg-slate-100 text-slate-400 dark:text-gray-500'}`}>{num}</div>
+ <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold border border-border-subtle ${step >= num ? 'bg-dusty-pink text-white shadow-card' : 'bg-slate-100 dark:bg-gray-800 text-slate-400 dark:text-gray-500'}`}>{num}</div>
  <span className={`hidden sm:block text-sm font-bold ${step >= num ? 'text-charcoal dark:text-gray-100' : 'text-slate-400 dark:text-gray-500'}`}>{label}</span>
  </div>
- {i < 3 && <div className={`hidden sm:block w-12 lg:w-16 h-0.5 mx-2 ${step > num ? 'bg-slate-900' : 'bg-slate-200'}`} />}
+ {i < 3 && <div className={`hidden sm:block w-12 lg:w-16 h-0.5 mx-2 ${step > num ? 'bg-slate-900 dark:bg-rose-400/70' : 'bg-slate-200 dark:bg-gray-700'}`} />}
  </div>
  )
  })}
@@ -82,7 +82,7 @@ export default function EventBoothPage() {
 
 function EventTemplateSelector({ templates, setTemplate }) {
  const [filter, setFilter] = useState('all')
- const colors = ['bg-rose-200 dark:bg-rose-900/50', 'bg-blue-200', 'bg-green-200', 'bg-yellow-200', 'bg-purple-200', 'bg-pink-200']
+ const colors = ['bg-rose-200 dark:bg-rose-900/50', 'bg-blue-200 dark:bg-blue-900/40', 'bg-green-200 dark:bg-green-900/40', 'bg-yellow-200 dark:bg-yellow-900/40', 'bg-purple-200 dark:bg-purple-900/40', 'bg-pink-200 dark:bg-pink-900/40']
  const filtered = filter === 'all' ? templates : templates.filter((t) => t.layout?.startsWith(filter))
 
  return (
@@ -91,7 +91,7 @@ function EventTemplateSelector({ templates, setTemplate }) {
  <div className="flex justify-center gap-2 mb-8">
  {layoutFilters.map((f) => (
  <button key={f.key} onClick={() => setFilter(f.key)}
- className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold border border-border-subtle transition-all ${filter === f.key ? 'bg-dusty-pink text-white text-charcoal dark:text-gray-100 shadow-card' : 'bg-white dark:bg-gray-900 text-slate-600 dark:text-gray-300 shadow-card hover:shadow-card-hover '}`}>
+ className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold border border-border-subtle transition-all ${filter === f.key ? 'bg-dusty-pink text-white shadow-card' : 'bg-white dark:bg-gray-900 text-slate-600 dark:text-gray-300 shadow-card hover:shadow-card-hover '}`}>
  <f.icon size={16} />{f.label}
  </button>
  ))}
@@ -187,7 +187,7 @@ function EventCameraCapture() {
  </div>
  </div>
  <div className="flex justify-center mt-5">
- <button onClick={handleCapture} disabled={isRunning || allDone} className="w-16 h-16 rounded-full bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card-hover text-charcoal dark:text-gray-100 flex items-center justify-center disabled:opacity-40 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0 transition-all active:scale-95">
+ <button onClick={handleCapture} disabled={isRunning || allDone} className="w-16 h-16 rounded-full bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card-hover flex items-center justify-center disabled:opacity-40 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0 transition-all active:scale-95">
  <Camera size={28} strokeWidth={2.5} />
  </button>
  </div>
@@ -204,7 +204,7 @@ function EventCameraCapture() {
  </div>
  <div className="mt-4 flex flex-col gap-2">
  <button onClick={() => setStep(1)} className="text-sm font-bold text-warm-gray dark:text-gray-400 hover:text-charcoal dark:text-gray-100">Ganti template</button>
- {allDone && <button onClick={() => setStep(3)} className="text-sm font-bold text-rose-500 hover:text-rose-600">Lanjut Edit &rarr;</button>}
+ {allDone && <button onClick={() => setStep(3)} className="text-sm font-bold text-rose-500 dark:text-rose-300 hover:text-rose-600">Lanjut Edit &rarr;</button>}
  </div>
  </div>
  </div>
@@ -255,7 +255,7 @@ function EventPhotoEditor() {
  <p className="text-xs text-warm-gray dark:text-gray-400 font-bold mt-1">{template?.name} &middot; {canvasW}×{canvasH}px</p>
  <div className="flex justify-between w-full mt-4">
  <button onClick={() => setStep(2)} className="text-sm font-bold text-warm-gray dark:text-gray-400 hover:text-charcoal dark:text-gray-100">&larr; Ambil Ulang</button>
- <button onClick={() => setStep(4)} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card-hover text-charcoal dark:text-gray-100 text-sm font-bold transition-all">
+ <button onClick={() => setStep(4)} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card-hover text-sm font-bold transition-all">
  <Check size={16} strokeWidth={3} />Selesai
  </button>
  </div>
@@ -285,7 +285,7 @@ function EventPhotoEditor() {
  <div className="flex flex-wrap gap-1.5 mb-3">
  {STICKER_CATEGORIES.map((cat) => (
  <button key={cat.key} onClick={() => setStickerCat(cat.key)}
- className={`px-3 py-1 rounded-lg text-xs font-bold border transition-all ${stickerCat === cat.key ? 'bg-dusty-pink text-white border-soft-gray text-charcoal dark:text-gray-100 shadow-card' : 'bg-white dark:bg-gray-900 border-slate-200 text-warm-gray dark:text-gray-400 hover:border-slate-400'}`}>
+ className={`px-3 py-1 rounded-lg text-xs font-bold border transition-all ${stickerCat === cat.key ? 'bg-dusty-pink text-white border-soft-gray shadow-card' : 'bg-white dark:bg-gray-900 border-slate-200 dark:border-gray-700 text-warm-gray dark:text-gray-400 hover:border-slate-400 dark:hover:border-gray-500'}`}>
  {cat.label}
  </button>
  ))}
@@ -369,7 +369,7 @@ function EventResultPreview({ event }) {
  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-white dark:bg-gray-900 rounded-xl border border-border-subtle shadow-card z-10 overflow-hidden">
  {PRINT_SIZES.map((size) => (
  <button key={size.id} onClick={() => { setPrintSize(size); setShowSizePicker(false) }}
- className={`w-full text-left px-4 py-3 text-sm font-medium hover:bg-rose-50 dark:bg-rose-950/30 border-b border-slate-100 dark:border-gray-800 last:border-0 ${printSize.id === size.id ? 'bg-rose-100 dark:bg-rose-900/30 font-bold' : ''}`}>
+ className={`w-full text-left px-4 py-3 text-sm font-medium hover:bg-rose-50 dark:hover:bg-rose-950/30 border-b border-slate-100 dark:border-gray-800 last:border-0 ${printSize.id === size.id ? 'bg-rose-100 dark:bg-rose-900/30 font-bold' : ''}`}>
  <span className="text-charcoal dark:text-gray-100">{size.label}</span><span className="block text-xs text-slate-400 dark:text-gray-500 mt-0.5">{size.px_w} × {size.px_h} px{size.overlay ? ' + frame' : ''}</span>
  </button>
  ))}
@@ -378,7 +378,7 @@ function EventResultPreview({ event }) {
  </div>
  </div>
  <div className="flex flex-col sm:flex-row gap-3 justify-center">
- <button onClick={() => handleDownload('jpeg')} disabled={processing} className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card-hover text-charcoal dark:text-gray-100 font-bold transition-all disabled:opacity-60">
+ <button onClick={() => handleDownload('jpeg')} disabled={processing} className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card-hover font-bold transition-all disabled:opacity-60">
  <Download size={18} strokeWidth={2.5} />{processing ? 'Memproses...' : 'Download JPG'}
  </button>
  <button onClick={handlePrint} disabled={processing} className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-slate-900 text-white border border-border-subtle shadow-card hover:shadow-card-hover font-bold transition-all disabled:opacity-60">

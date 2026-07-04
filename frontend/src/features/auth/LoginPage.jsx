@@ -45,7 +45,7 @@ export default function LoginPage() {
              </p>
  </div>
 
- {error && <div className="mb-4 px-4 py-3 rounded-xl bg-red-50 border border-red-400 text-sm text-red-700 font-medium">{error}</div>}
+ {error && <div className="mb-4 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-400 dark:border-red-900 text-sm text-red-700 dark:text-red-300 font-medium">{error}</div>}
 
  <form onSubmit={handleSubmit} className="space-y-4">
  <div>
@@ -64,7 +64,7 @@ export default function LoginPage() {
  </div>
  </div>
  <button type="submit" disabled={loading}
- className="w-full py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-sm disabled:opacity-60 transition-all">
+ className="w-full py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card font-bold text-sm disabled:opacity-60 transition-all">
  {loading ? 'Masuk...' : 'Masuk'}
  </button>
  </form>

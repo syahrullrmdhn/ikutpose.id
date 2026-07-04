@@ -124,7 +124,7 @@ export default function TemplateForm() {
  <h2 className="text-xl font-extrabold">{isEdit ? 'Edit Template' : 'Buat Template / Photocard'}</h2>
  </div>
  <button onClick={handleSave} disabled={mut.isPending || !form.name}
- className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-dusty-pink text-white border border-border-subtle hover:shadow-card-hover text-charcoal dark:text-gray-100 text-sm font-bold disabled:opacity-50 transition-all">
+ className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-dusty-pink text-white border border-border-subtle hover:bg-deep-rose hover:shadow-card-hover text-sm font-bold disabled:opacity-50 transition-all">
  <Save size={16} strokeWidth={2.5} />{mut.isPending ? 'Menyimpan...' : 'Simpan'}
  </button>
  </div>

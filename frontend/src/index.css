@@ -6,21 +6,21 @@
 
 .dark {
   /* Semantic overrides for dark mode */
-  --color-bg: #0f172a;
-  --color-bg-alt: #1e293b;
-  --color-surface: #1e293b;
+  --color-bg: #0b1120;
+  --color-bg-alt: #111827;
+  --color-surface: #111827;
   --color-border: #334155;
-  --color-border-subtle: #1e293b;
+  --color-border-subtle: #243041;
   --color-text: #cbd5e1;
-  --color-text-strong: #f1f5f9;
-  --color-text-muted: #64748b;
+  --color-text-strong: #f8fafc;
+  --color-text-muted: #94a3b8;
   --color-charcoal: #f1f5f9;
   --color-warm-gray: #94a3b8;
-  --color-muted-mauve: #64748b;
+  --color-muted-mauve: #94a3b8;
   --color-soft-gray: #334155;
   --color-cloud: #1e293b;
-  --color-petal-white: #0f172a;
-  --color-rose-cream: #0f172a;
+  --color-petal-white: #111827;
+  --color-rose-cream: #0b1120;
 
   /* Transitions */
   color-scheme: dark;
@@ -32,8 +32,37 @@ html {
 }
 
 html.dark body {
-  background-color: #0f172a;
+  background-color: #0b1120;
   color: #cbd5e1;
+}
+
+input,
+select,
+textarea {
+  color: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  color: #e5e7eb;
+  border-color: #334155;
+}
+
+.dark select option {
+  background-color: #111827;
+  color: #e5e7eb;
+}
+
+.dark .shadow-card,
+.dark .shadow-card-hover,
+.dark .shadow-btn {
+  box-shadow: 0 12px 32px rgba(2, 6, 23, 0.35);
 }
 
 /* Dark mode scrollbar */

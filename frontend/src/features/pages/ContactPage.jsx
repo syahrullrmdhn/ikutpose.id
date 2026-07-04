@@ -32,49 +32,49 @@ export default function ContactPage() {
           
           <div className="grid md:grid-cols-2 gap-6">
             {settings?.contact_email && (
-              <a href={`mailto:${settings.contact_email}`} className="flex items-center gap-5 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-border-subtle shadow-card hover:shadow-card-hover hover:scale-[1.02] transition-all">
-                <div className="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-dusty-pink">
+              <a href={`mailto:${settings.contact_email}`} className="flex items-center gap-5 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-border-subtle dark:border-gray-800 shadow-card hover:shadow-card-hover hover:scale-[1.02] transition-all">
+                <div className="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-dusty-pink dark:text-rose-300">
                   <Mail size={24} />
                 </div>
                 <div>
                   <h3 className="font-bold text-charcoal dark:text-gray-100">Email</h3>
-                  <p className="text-slate-500 text-sm mt-0.5">{settings.contact_email}</p>
+                  <p className="text-slate-500 dark:text-gray-400 text-sm mt-0.5">{settings.contact_email}</p>
                 </div>
               </a>
             )}
 
             {settings?.contact_whatsapp && (
-              <a href={`https://wa.me/${settings.contact_whatsapp}`} target="_blank" rel="noreferrer" className="flex items-center gap-5 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-border-subtle shadow-card hover:shadow-card-hover hover:scale-[1.02] transition-all">
-                <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-green-600">
+              <a href={`https://wa.me/${settings.contact_whatsapp}`} target="_blank" rel="noreferrer" className="flex items-center gap-5 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-border-subtle dark:border-gray-800 shadow-card hover:shadow-card-hover hover:scale-[1.02] transition-all">
+                <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-300">
                   <MessageCircle size={24} />
                 </div>
                 <div>
                   <h3 className="font-bold text-charcoal dark:text-gray-100">WhatsApp</h3>
-                  <p className="text-slate-500 text-sm mt-0.5">+{settings.contact_whatsapp}</p>
+                  <p className="text-slate-500 dark:text-gray-400 text-sm mt-0.5">+{settings.contact_whatsapp}</p>
                 </div>
               </a>
             )}
 
             {settings?.contact_instagram && (
-              <a href={`https://instagram.com/${settings.contact_instagram}`} target="_blank" rel="noreferrer" className="flex items-center gap-5 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-border-subtle shadow-card hover:shadow-card-hover hover:scale-[1.02] transition-all">
-                <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600">
+              <a href={`https://instagram.com/${settings.contact_instagram}`} target="_blank" rel="noreferrer" className="flex items-center gap-5 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-border-subtle dark:border-gray-800 shadow-card hover:shadow-card-hover hover:scale-[1.02] transition-all">
+                <div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-300">
                   <Camera size={24} />
                 </div>
                 <div>
                   <h3 className="font-bold text-charcoal dark:text-gray-100">Instagram</h3>
-                  <p className="text-slate-500 text-sm mt-0.5">@{settings.contact_instagram}</p>
+                  <p className="text-slate-500 dark:text-gray-400 text-sm mt-0.5">@{settings.contact_instagram}</p>
                 </div>
               </a>
             )}
 
             {settings?.contact_address && (
-              <div className="flex items-center gap-5 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-border-subtle shadow-card md:col-span-2">
-                <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+              <div className="flex items-center gap-5 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-border-subtle dark:border-gray-800 shadow-card md:col-span-2">
+                <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-300 shrink-0">
                   <MapPin size={24} />
                 </div>
                 <div>
                   <h3 className="font-bold text-charcoal dark:text-gray-100">Lokasi</h3>
-                  <p className="text-slate-500 text-sm mt-0.5 whitespace-pre-wrap">{settings.contact_address}</p>
+                  <p className="text-slate-500 dark:text-gray-400 text-sm mt-0.5 whitespace-pre-wrap">{settings.contact_address}</p>
                 </div>
               </div>
             )}

@@ -89,7 +89,7 @@ export default function AboutPage() {
             <div className="space-y-4">
               {services.map((service, idx) => (
                 <div key={idx} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 shrink-0 mt-1">
+                  <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-300 shrink-0 mt-1">
                     <service.icon size={20} />
                   </div>
                   <p className="text-slate-600 dark:text-gray-300 leading-relaxed pt-2">{service.text}</p>

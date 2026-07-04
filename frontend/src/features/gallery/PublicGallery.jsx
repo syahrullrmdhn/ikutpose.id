@@ -21,7 +21,7 @@ export default function PublicGallery() {
  <div className="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-gray-950 font-sans text-charcoal dark:text-gray-100 selection:bg-rose-300">
  <Navbar />
 
- <div className="relative overflow-hidden bg-rose-50 dark:bg-rose-950/30 border-b-2 border-soft-gray">
+ <div className="relative overflow-hidden bg-rose-50 dark:bg-rose-950/30 border-b-2 border-soft-gray dark:border-gray-800">
  <div className="absolute inset-0 z-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#0f172a 2px, transparent 2px)', backgroundSize: '32px 32px' }} />
  <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 text-center">
  <motion.h1 className="text-3xl md:text-4xl font-extrabold mb-2" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>Gallery</motion.h1>
@@ -38,7 +38,7 @@ export default function PublicGallery() {
 
  {isLoading ? (
  <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
- {[1, 2, 3, 4, 5, 6].map((i) => <div key={i} className="break-inside-avoid rounded-xl border border-border-subtle bg-slate-200 animate-pulse" style={{ aspectRatio: i % 2 === 0 ? '3/4' : '4/3' }} />)}
+ {[1, 2, 3, 4, 5, 6].map((i) => <div key={i} className="break-inside-avoid rounded-xl border border-border-subtle dark:border-gray-800 bg-slate-200 dark:bg-gray-800 animate-pulse" style={{ aspectRatio: i % 2 === 0 ? '3/4' : '4/3' }} />)}
  </div>
  ) : list.length === 0 ? (
  <div className="text-center py-16">
@@ -53,7 +53,7 @@ export default function PublicGallery() {
  style={{ aspectRatio: i % 3 === 0 ? '3/4' : '4/3' }}
  initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.05 }}
  onClick={() => setSelectedPhoto(photo)}>
- <div className="w-full h-full bg-gradient-to-br from-rose-200 via-rose-100 to-white" />
+ <div className="w-full h-full bg-gradient-to-br from-rose-200 via-rose-100 to-white dark:from-rose-900/40 dark:via-slate-900 dark:to-gray-900" />
  <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors flex flex-col justify-between p-4 opacity-0 group-hover:opacity-100">
  <div className="flex justify-end">
  <button className="w-8 h-8 rounded-lg bg-white dark:bg-gray-900 border border-border-subtle shadow-card flex items-center justify-center text-charcoal dark:text-gray-100"><Heart size={14} /></button>
@@ -75,11 +75,11 @@ export default function PublicGallery() {
  {selectedPhoto && (
  <div className="fixed inset-0 z-50 bg-slate-900/80 flex items-center justify-center p-6" onClick={() => setSelectedPhoto(null)}>
  <motion.div className="relative max-w-lg w-full bg-white dark:bg-gray-900 rounded-xl border border-border-subtle shadow-card overflow-hidden" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} onClick={(e) => e.stopPropagation()}>
- <div className="aspect-[3/4] bg-gradient-to-br from-rose-200 via-rose-100 to-white" />
+ <div className="aspect-[3/4] bg-gradient-to-br from-rose-200 via-rose-100 to-white dark:from-rose-900/40 dark:via-slate-900 dark:to-gray-900" />
  <div className="p-5">
  <p className="font-bold text-charcoal dark:text-gray-100">{selectedPhoto.photo_session?.event?.name ?? 'Photo'}</p>
  <div className="flex gap-3 mt-4">
- <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-sm transition-all"><Download size={16} />Download</button>
+ <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card font-bold text-sm transition-all"><Download size={16} />Download</button>
  <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-sm transition-all"><Share2 size={16} />Share</button>
  </div>
  </div>

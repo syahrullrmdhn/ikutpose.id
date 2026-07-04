@@ -48,7 +48,7 @@ export default function RegisterPage() {
  </p>
  </div>
 
- {error && <div className="mb-4 px-4 py-3 rounded-xl bg-red-50 border border-red-400 text-sm text-red-700 font-medium">{error}</div>}
+ {error && <div className="mb-4 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-400 dark:border-red-900 text-sm text-red-700 dark:text-red-300 font-medium">{error}</div>}
 
  <form onSubmit={handleSubmit} className="space-y-4">
  <div>
@@ -77,7 +77,7 @@ export default function RegisterPage() {
  className="w-full px-4 py-3 rounded-xl border border-border-subtle text-sm bg-white dark:bg-gray-900 shadow-card focus:shadow-card focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none transition-all" />
  </div>
  <button type="submit" disabled={loading}
- className="w-full py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-sm disabled:opacity-60 transition-all">
+ className="w-full py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card font-bold text-sm disabled:opacity-60 transition-all">
  {loading ? 'Mendaftar...' : 'Daftar'}
  </button>
  </form>

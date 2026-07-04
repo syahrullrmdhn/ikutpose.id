@@ -1,89 +1,229 @@
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import {
+  ArrowRight,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Sparkles,
+  UserRound,
+  X,
+} from 'lucide-react'
+import { Link, NavLink } from 'react-router-dom'
 import { useAuthStore } from '../../stores/authStore'
 import ThemeToggle from '../ui/ThemeToggle'
 
 const links = [
-  { label: 'Booth', href: '/booth' },
-  { label: 'Events', href: '/events' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Gallery', href: '/gallery' },
-  { label: 'Tentang', href: '/about' },
-  { label: 'Kontak', href: '/contact' },
+  { label: 'Booth', href: '/booth', description: 'Buka kamera dan mulai ambil foto' },
+  { label: 'Events', href: '/events', description: 'Lihat event dan gallery per acara' },
+  { label: 'Pricing', href: '/pricing', description: 'Pilih paket photobooth terbaikmu' },
+  { label: 'Gallery', href: '/gallery', description: 'Jelajahi hasil foto yang sudah dibagikan' },
+  { label: 'Tentang', href: '/about', description: 'Kenali cerita dan layanan IkutPose' },
+  { label: 'Kontak', href: '/contact', description: 'Hubungi tim untuk event custom' },
 ]
+
+const desktopLinkClass = ({ isActive }) =>
+  [
+    'rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200',
+    isActive
+      ? 'bg-rose-200 text-charcoal shadow-btn dark:bg-rose-900/60 dark:text-rose-100'
+      : 'text-slate-600 hover:bg-white hover:text-charcoal dark:text-gray-300 dark:hover:bg-gray-800/80 dark:hover:text-white',
+  ].join(' ')
+
+const mobileLinkClass = ({ isActive }) =>
+  [
+    'group block rounded-2xl border px-4 py-3 transition-all',
+    isActive
+      ? 'border-rose-300 bg-rose-50 dark:border-rose-800 dark:bg-rose-900/20'
+      : 'border-border-subtle bg-white/80 hover:border-dusty-pink dark:border-gray-800 dark:bg-gray-900/70 dark:hover:border-rose-700',
+  ].join(' ')
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const { user, isAuthenticated, logout } = useAuthStore()
 
+  const closeMenu = () => setOpen(false)
+
   return (
-    <nav className="sticky top-0 z-50 bg-white/40 dark:bg-gray-950/40 backdrop-blur-lg border-b border-border-subtle dark:border-gray-800">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <img src="/Logobulat.jpg" alt="IkutPose" className="h-10 w-10 rounded-full shadow-card hover:scale-105 transition-transform" />
+    <nav className="sticky top-0 z-50 border-b border-white/60 bg-[rgba(253,245,246,0.78)] backdrop-blur-xl dark:border-gray-800 dark:bg-[rgba(10,15,28,0.8)]">
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-rose-300/80 to-transparent dark:via-rose-800/80" />
+
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+        <Link to="/" className="flex items-center gap-3">
+          <img
+            src="/Logobulat.jpg"
+            alt="IkutPose"
+            className="h-11 w-11 rounded-2xl border border-white/70 object-cover shadow-card dark:border-gray-700"
+          />
+          <div className="hidden sm:block">
+            <p className="font-heading text-2xl leading-none text-charcoal dark:text-white">IkutPose</p>
+            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-mauve dark:text-gray-400">
+              Digital Photobooth
+            </p>
+          </div>
         </Link>
 
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-2 rounded-full border border-white/70 bg-white/72 p-1.5 shadow-card dark:border-gray-800 dark:bg-gray-900/82">
           {links.map((link) => (
-            <Link key={link.href} to={link.href}
-              className="text-sm font-bold text-slate-600 dark:text-gray-300 hover:text-charcoal dark:hover:text-white transition-colors">
+            <NavLink key={link.href} to={link.href} className={desktopLinkClass}>
               {link.label}
-            </Link>
+            </NavLink>
           ))}
+        </div>
 
-          <ThemeToggle />
+        <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle className="rounded-2xl" />
+
+          <Link
+            to="/booth"
+            className="inline-flex items-center gap-2 rounded-full bg-charcoal px-4 py-2 text-sm font-bold text-white shadow-btn transition-all hover:-translate-y-0.5 hover:bg-deep-rose dark:bg-rose-200 dark:text-charcoal dark:hover:bg-rose-100"
+          >
+            Coba Booth
+            <ArrowRight size={15} />
+          </Link>
 
           {isAuthenticated ? (
-            <div className="flex items-center gap-3">
-              <Link to="/profile"
-                className="flex items-center gap-2 text-sm font-bold text-charcoal dark:text-gray-200">
-                <div className="w-8 h-8 rounded-lg bg-rose-200 dark:bg-rose-900/50 border border-border-subtle dark:border-gray-700 shadow-card flex items-center justify-center text-xs font-bold">
+            <div className="flex items-center gap-2">
+              <Link
+                to="/profile"
+                className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white/80 px-3 py-2 text-sm font-semibold text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+              >
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-rose-200 text-xs font-bold text-charcoal dark:bg-rose-900/50 dark:text-rose-100">
                   {user?.name?.charAt(0).toUpperCase() || 'U'}
-                </div>
-                {user?.name}
+                </span>
+                <span className="max-w-28 truncate">{user?.name}</span>
               </Link>
+
               {user?.role === 'admin' && (
-                <Link to="/admin"
-                  className="text-sm font-bold px-4 py-1.5 rounded-lg bg-rose-200 dark:bg-rose-900/50 border border-border-subtle dark:border-gray-700 shadow-card hover:shadow-card text-charcoal dark:text-gray-200 transition-all">
+                <Link
+                  to="/admin"
+                  className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white/80 px-3 py-2 text-sm font-semibold text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+                >
+                  <LayoutDashboard size={15} />
                   Admin
                 </Link>
               )}
+
+              <button
+                onClick={logout}
+                className="inline-flex items-center gap-2 rounded-full border border-transparent px-3 py-2 text-sm font-semibold text-warm-gray transition-colors hover:text-muted-red dark:text-gray-400 dark:hover:text-rose-300"
+              >
+                <LogOut size={15} />
+                Keluar
+              </button>
             </div>
           ) : (
-            <Link to="/login"
-              className="text-sm font-bold px-5 py-2 rounded-lg bg-white dark:bg-gray-800 border border-border-subtle dark:border-gray-700 shadow-card hover:shadow-card text-charcoal dark:text-gray-200 transition-all">
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white/80 px-4 py-2 text-sm font-semibold text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+            >
+              <UserRound size={15} />
               Login
             </Link>
           )}
         </div>
 
-        <div className="flex md:hidden items-center gap-2">
-          <ThemeToggle />
-          <button className="text-slate-600 dark:text-gray-400" onClick={() => setOpen(!open)} aria-label="Toggle menu">
-            {open ? <X size={24} /> : <Menu size={24} />}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle className="rounded-2xl" />
+          <button
+            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border-subtle bg-white/80 text-slate-700 shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-200"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
 
       {open && (
-        <div className="md:hidden bg-white dark:bg-gray-900 border-t-2 border-soft-gray dark:border-gray-800 px-6 py-4 space-y-2">
-          {links.map((link) => (
-            <Link key={link.href} to={link.href} className="block text-sm font-bold text-slate-600 dark:text-gray-300 hover:text-charcoal dark:hover:text-white py-2" onClick={() => setOpen(false)}>
-              {link.label}
-            </Link>
-          ))}
-          {isAuthenticated ? (
-            <>
-              <Link to="/profile" className="block text-sm font-bold text-charcoal dark:text-gray-200 py-2" onClick={() => setOpen(false)}>Profil Saya</Link>
-              {user?.role === 'admin' && <Link to="/admin" className="block text-sm font-bold text-rose-500 dark:text-rose-400 py-2" onClick={() => setOpen(false)}>Admin Panel</Link>}
-              <button onClick={() => { logout(); setOpen(false) }} className="block text-sm font-bold text-red-500 dark:text-red-400 py-2 w-full text-left">Keluar</button>
-            </>
-          ) : (
-            <Link to="/login" className="block text-sm font-bold px-5 py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-border-subtle dark:border-gray-700 shadow-card text-charcoal dark:text-gray-200 text-center mt-2" onClick={() => setOpen(false)}>
-              Login
-            </Link>
-          )}
+        <div className="border-t border-white/70 bg-[rgba(253,245,246,0.96)] px-6 py-5 backdrop-blur-xl dark:border-gray-800 dark:bg-[rgba(10,15,28,0.96)] md:hidden">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-4 rounded-[28px] border border-border-subtle bg-white/80 p-4 shadow-card dark:border-gray-800 dark:bg-gray-900/82">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-deep-rose dark:text-rose-300">
+                Capture Moments
+              </p>
+              <p className="mt-2 text-sm leading-6 text-warm-gray dark:text-gray-300">
+                Photobooth yang siap untuk hangout, wedding, wisuda, sampai event kantor dengan hasil yang langsung bisa dibawa pulang.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {links.map((link) => (
+                <NavLink key={link.href} to={link.href} className={mobileLinkClass} onClick={closeMenu}>
+                  {({ isActive }) => (
+                    <>
+                      <div className="flex items-center justify-between">
+                        <span className={`text-sm font-bold ${isActive ? 'text-charcoal dark:text-white' : 'text-charcoal dark:text-gray-100'}`}>
+                          {link.label}
+                        </span>
+                        <ArrowRight size={16} className={isActive ? 'text-deep-rose dark:text-rose-300' : 'text-muted-mauve dark:text-gray-500'} />
+                      </div>
+                      <p className="mt-1 text-xs leading-5 text-warm-gray dark:text-gray-400">{link.description}</p>
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </div>
+
+            <div className="mt-5 grid grid-cols-2 gap-3">
+              <Link
+                to="/booth"
+                onClick={closeMenu}
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-charcoal px-4 py-3 text-sm font-bold text-white shadow-btn dark:bg-rose-200 dark:text-charcoal"
+              >
+                <Sparkles size={16} />
+                Coba Booth
+              </Link>
+
+              {isAuthenticated ? (
+                <Link
+                  to="/profile"
+                  onClick={closeMenu}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+                >
+                  <UserRound size={16} />
+                  Profil
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={closeMenu}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+                >
+                  <UserRound size={16} />
+                  Login
+                </Link>
+              )}
+            </div>
+
+            {isAuthenticated && (
+              <div className="mt-4 flex items-center justify-between rounded-2xl border border-border-subtle bg-white/70 px-4 py-3 dark:border-gray-800 dark:bg-gray-900/70">
+                <div>
+                  <p className="text-sm font-bold text-charcoal dark:text-gray-100">{user?.name}</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-muted-mauve dark:text-gray-500">{user?.role}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {user?.role === 'admin' && (
+                    <Link
+                      to="/admin"
+                      onClick={closeMenu}
+                      className="rounded-xl bg-rose-100 px-3 py-2 text-xs font-bold text-charcoal dark:bg-rose-900/30 dark:text-rose-100"
+                    >
+                      Admin
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      logout()
+                      closeMenu()
+                    }}
+                    className="rounded-xl px-3 py-2 text-xs font-bold text-muted-red dark:text-rose-300"
+                  >
+                    Keluar
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </nav>

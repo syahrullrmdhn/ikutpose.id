@@ -21,7 +21,7 @@ export default function ProfilePage() {
  </div>
  <h2 className="text-xl font-extrabold mb-2">Belum Masuk</h2>
  <p className="text-sm text-warm-gray dark:text-gray-400 font-medium mb-6">Silakan login untuk melihat profil</p>
- <Link to="/login" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-sm transition-all">
+ <Link to="/login" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card font-bold text-sm transition-all">
  Login
  </Link>
  </div>
@@ -65,7 +65,7 @@ export default function ProfilePage() {
  ))}
  </div>
  <div className="flex gap-3 mt-6">
- <Link to="/booth" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-sm transition-all">
+ <Link to="/booth" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card font-bold text-sm transition-all">
  <Camera size={16} strokeWidth={2.5} />Mulai Foto
  </Link>
  <button onClick={handleLogout} className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-gray-900 border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-sm transition-all">

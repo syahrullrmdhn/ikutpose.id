@@ -25,7 +25,7 @@ export default function BoothPage() {
  <div key={s.number} className="flex items-center">
  <div className="flex items-center gap-2">
  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold border border-border-subtle ${
- step >= s.number ? 'bg-dusty-pink text-white text-charcoal dark:text-gray-100 shadow-card' : 'bg-slate-100 text-slate-400 dark:text-gray-500 shadow-none'
+ step >= s.number ? 'bg-dusty-pink text-white shadow-card' : 'bg-slate-100 dark:bg-gray-800 text-slate-400 dark:text-gray-500 shadow-none'
  }`}>
  {s.number}
  </div>
@@ -34,7 +34,7 @@ export default function BoothPage() {
  </span>
  </div>
  {i < steps.length - 1 && (
- <div className={`hidden sm:block w-16 h-0.5 mx-3 ${step > s.number ? 'bg-slate-900' : 'bg-slate-200'}`} />
+ <div className={`hidden sm:block w-16 h-0.5 mx-3 ${step > s.number ? 'bg-slate-900 dark:bg-rose-400/70' : 'bg-slate-200 dark:bg-gray-700'}`} />
  )}
  </div>
  ))}

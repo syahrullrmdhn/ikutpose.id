@@ -58,7 +58,7 @@ export default function LandingPage() {
  >
  Abadikan Momen, <br className="hidden sm:block" />
  <span className="relative inline-block mt-3 md:mt-4">
- <span className="relative z-10 inline-block bg-rose-300 px-4 py-1 border border-border-subtle shadow-card transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-300 cursor-default">
+ <span className="relative z-10 inline-block bg-rose-300 dark:bg-rose-900/60 px-4 py-1 border border-border-subtle shadow-card transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-300 cursor-default">
  Ciptakan Kenangan.
  </span>
  </span>
@@ -81,7 +81,7 @@ export default function LandingPage() {
  >
  <a
  href="/booth"
- className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:shadow-card text-charcoal dark:text-gray-100 font-bold text-base transition-all w-full sm:w-auto"
+ className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-dusty-pink text-white border border-border-subtle shadow-card hover:bg-deep-rose hover:shadow-card font-bold text-base transition-all w-full sm:w-auto"
  >
  Mulai Sekarang
  <ArrowRight size={18} strokeWidth={2.5} />
@@ -123,7 +123,7 @@ export default function LandingPage() {
  <div className="w-12 h-12 rounded-lg bg-rose-200 dark:bg-rose-900/50 border border-border-subtle flex items-center justify-center text-charcoal dark:text-gray-100 shadow-card">
  <step.icon size={24} strokeWidth={2.5} />
  </div>
- <span className="text-lg font-black text-slate-300">
+ <span className="text-lg font-black text-slate-300 dark:text-gray-600">
  {step.number}
  </span>
  </div>
@@ -203,7 +203,7 @@ export default function LandingPage() {
  {/* CTA Section - Punchy Block */}
  <section className="py-24 px-6 pb-32">
  <motion.div 
- className="max-w-4xl mx-auto rounded-2xl bg-rose-300 border border-border-subtle shadow-card p-12 md:p-16 text-center"
+ className="max-w-4xl mx-auto rounded-2xl bg-rose-300 dark:bg-gradient-to-br dark:from-rose-900 dark:to-rose-950 border border-border-subtle shadow-card p-12 md:p-16 text-center"
  initial={{ opacity: 0, y: 20 }}
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true }}
@@ -216,7 +216,7 @@ export default function LandingPage() {
  </p>
  <a
  href="/booth"
- className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-slate-900 text-white font-bold text-lg border border-transparent hover:bg-white dark:bg-gray-900 hover:text-charcoal dark:text-gray-100 hover:border-soft-gray transition-colors"
+ className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-slate-900 text-white font-bold text-lg border border-transparent hover:bg-white hover:text-charcoal dark:bg-white dark:text-charcoal dark:hover:bg-rose-100 dark:hover:text-charcoal dark:hover:border-soft-gray transition-colors"
  >
  Buka Kamera
  <ArrowRight size={20} strokeWidth={2.5} />

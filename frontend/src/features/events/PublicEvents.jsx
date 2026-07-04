@@ -8,10 +8,10 @@ import Navbar from '../../components/layout/Navbar'
 import Footer from '../../components/layout/Footer'
 
 const statusBadge = {
- active: 'bg-green-200 text-green-900',
- upcoming: 'bg-blue-200 text-blue-900',
+ active: 'bg-green-200 dark:bg-green-900/40 text-green-900 dark:text-green-200',
+ upcoming: 'bg-blue-200 dark:bg-blue-900/40 text-blue-900 dark:text-blue-200',
  ended: 'bg-slate-200 text-slate-700 dark:text-gray-200',
- draft: 'bg-yellow-200 text-yellow-900',
+ draft: 'bg-yellow-200 dark:bg-yellow-900/40 text-yellow-900 dark:text-yellow-200',
 }
 
 const statusLabel = {
@@ -36,7 +36,7 @@ export default function PublicEvents() {
  <div className="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-gray-950 font-sans text-charcoal dark:text-gray-100 selection:bg-rose-300">
  <Navbar />
 
- <div className="relative overflow-hidden bg-rose-50 dark:bg-rose-950/30 border-b-2 border-soft-gray">
+ <div className="relative overflow-hidden bg-rose-50 dark:bg-rose-950/30 border-b-2 border-soft-gray dark:border-gray-800">
  <div className="absolute inset-0 z-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#0f172a 2px, transparent 2px)', backgroundSize: '32px 32px' }} />
  <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 text-center">
  <motion.h1 className="text-3xl md:text-4xl font-extrabold mb-2" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>Events</motion.h1>
@@ -52,13 +52,13 @@ export default function PublicEvents() {
  </div>
 
  {isLoading ? (
- <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{[1, 2, 3].map((i) => <div key={i} className="bg-white dark:bg-gray-900 rounded-xl border border-border-subtle h-64 animate-pulse" />)}</div>
+ <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{[1, 2, 3].map((i) => <div key={i} className="bg-white dark:bg-gray-900 rounded-xl border border-border-subtle dark:border-gray-800 h-64 animate-pulse" />)}</div>
  ) : (
  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
  {filtered.map((event, i) => (
  <motion.div key={event.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.08 }}>
- <Link to={`/events/${event.slug}`} className="block bg-white dark:bg-gray-900 rounded-xl border border-border-subtle shadow-card hover:shadow-card transition-all overflow-hidden group">
- <div className="h-36 bg-gradient-to-br from-rose-200 via-rose-100 to-white relative overflow-hidden">
+ <Link to={`/events/${event.slug}`} className="block bg-white dark:bg-gray-900 rounded-xl border border-border-subtle dark:border-gray-800 shadow-card hover:shadow-card transition-all overflow-hidden group">
+ <div className="h-36 bg-gradient-to-br from-rose-200 via-rose-100 to-white dark:from-rose-900/40 dark:via-slate-900 dark:to-gray-900 relative overflow-hidden">
  <img src="/abstrackping.jpeg" alt="" className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-500" />
  <div className="absolute top-3 right-3">
  <span className={`text-xs px-2.5 py-1 rounded-lg font-bold border border-border-subtle ${statusBadge[event.status] ?? 'bg-slate-200 text-slate-700 dark:text-gray-200'}`}>{statusLabel[event.status] ?? event.status}</span>

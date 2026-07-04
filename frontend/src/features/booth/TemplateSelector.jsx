@@ -23,7 +23,7 @@ export default function TemplateSelector() {
  const list = Array.isArray(templates) ? templates : []
  const filtered = filter === 'all' ? list : list.filter((t) => t.layout?.startsWith(filter))
 
- const colors = ['bg-rose-200 dark:bg-rose-900/50', 'bg-blue-200', 'bg-green-200', 'bg-yellow-200', 'bg-purple-200', 'bg-pink-200']
+ const colors = ['bg-rose-200 dark:bg-rose-900/50', 'bg-blue-200 dark:bg-blue-900/40', 'bg-green-200 dark:bg-green-900/40', 'bg-yellow-200 dark:bg-yellow-900/40', 'bg-purple-200 dark:bg-purple-900/40', 'bg-pink-200 dark:bg-pink-900/40']
 
  return (
  <div className="max-w-4xl w-full">
@@ -34,7 +34,7 @@ export default function TemplateSelector() {
  <button key={f.key} onClick={() => setFilter(f.key)}
  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold border border-border-subtle transition-all ${
  filter === f.key
- ? 'bg-dusty-pink text-white text-charcoal dark:text-gray-100 shadow-card'
+ ? 'bg-dusty-pink text-white shadow-card'
  : 'bg-white dark:bg-gray-900 text-slate-600 dark:text-gray-300 shadow-card hover:shadow-card '
  }`}>
  <f.icon size={16} />{f.label}
@@ -44,7 +44,7 @@ export default function TemplateSelector() {
 
  {isLoading ? (
  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
- {[1, 2, 3, 4, 5, 6].map((i) => <div key={i} className="bg-white dark:bg-gray-900 rounded-xl border border-border-subtle animate-pulse"><div className="aspect-[3/4] bg-slate-100" /><div className="p-3"><div className="h-4 w-24 bg-slate-100 rounded" /></div></div>)}
+ {[1, 2, 3, 4, 5, 6].map((i) => <div key={i} className="bg-white dark:bg-gray-900 rounded-xl border border-border-subtle dark:border-gray-800 animate-pulse"><div className="aspect-[3/4] bg-slate-100 dark:bg-gray-800" /><div className="p-3"><div className="h-4 w-24 bg-slate-100 dark:bg-gray-800 rounded" /></div></div>)}
  </div>
  ) : (
  <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
@@ -67,16 +67,16 @@ export default function TemplateSelector() {
  {template.photo_slots?.length ?? 0} foto &middot; {template.canvas_width}×{template.canvas_height}px
  </p>
  <div className="flex items-center gap-2 mt-1.5">
- <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 dark:text-gray-300 border border-slate-300">
+ <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-gray-800 text-slate-600 dark:text-gray-300 border border-slate-300 dark:border-gray-700">
  {template.layout?.replace('_', ' ')}
  </span>
  {hasOverlay && (
- <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-green-100 text-green-700 border border-green-300">
+ <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-300 dark:border-green-800">
  Photocard
  </span>
  )}
  {template.is_premium && (
- <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 border border-yellow-300">
+ <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-800">
  Premium
  </span>
  )}

@@ -93,14 +93,14 @@ const moments = ['Wedding', 'Birthday', 'Wisuda', 'Gathering', 'Corporate Event'
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-rose-cream text-charcoal dark:text-gray-100">
+    <div className="min-h-screen flex flex-col bg-rose-cream dark:bg-gray-950 text-charcoal dark:text-gray-100">
       <Navbar />
 
       <main className="flex-1 overflow-hidden">
         <section className="relative isolate px-6 py-20 md:py-24">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.95),_rgba(245,230,232,0.92)_38%,_rgba(232,205,208,0.7)_100%)]" />
-          <div className="absolute -left-16 top-10 h-56 w-56 rounded-full bg-white dark:bg-gray-900/50 blur-3xl" />
-          <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-[#f2bcc7]/50 blur-3xl" />
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.95),_rgba(245,230,232,0.92)_38%,_rgba(232,205,208,0.7)_100%)] dark:bg-[radial-gradient(circle_at_top_left,_rgba(29,38,55,0.96),_rgba(16,23,42,0.98)_42%,_rgba(8,12,23,1)_100%)]" />
+          <div className="absolute -left-16 top-10 h-56 w-56 rounded-full bg-white/70 dark:bg-rose-900/20 blur-3xl" />
+          <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-[#f2bcc7]/50 dark:bg-rose-800/20 blur-3xl" />
           <div className="mx-auto max-w-6xl">
             <motion.div
               className="mx-auto max-w-3xl text-center"
@@ -108,13 +108,13 @@ export default function PricingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
             >
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/70 bg-white dark:bg-gray-900/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-deep-rose shadow-card backdrop-blur">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/70 bg-white dark:border-gray-700 dark:bg-gray-900/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-deep-rose dark:text-rose-200 shadow-card backdrop-blur">
                 <Sparkles size={14} />
                 Paket Pricing Ikut Pose
               </div>
               <h1 className="text-5xl leading-none sm:text-6xl md:text-7xl">
                 Abadikan Momen,
-                <span className="mt-3 block text-deep-rose">Ciptakan Kenangan</span>
+                <span className="mt-3 block text-deep-rose dark:text-rose-200">Ciptakan Kenangan</span>
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-warm-gray dark:text-gray-400 sm:text-lg">
                 Pilih paket photobooth yang paling pas untuk wedding, ulang tahun, wisuda, sampai acara kantor.
@@ -135,12 +135,12 @@ export default function PricingPage() {
                   <article
                     key={item.name}
                     className={[
-                      'relative overflow-hidden rounded-[28px] border border-white/70 bg-white dark:bg-gray-900/90 p-7 shadow-[0_20px_45px_rgba(196,145,155,0.16)] backdrop-blur transition-transform duration-300 hover:-translate-y-1',
+                      'relative overflow-hidden rounded-[28px] border border-white/70 dark:border-gray-800 bg-white dark:bg-gradient-to-b dark:from-gray-900 dark:to-[#111827] p-7 shadow-[0_20px_45px_rgba(196,145,155,0.16)] backdrop-blur transition-transform duration-300 hover:-translate-y-1',
                       item.featured ? 'lg:-translate-y-4 lg:shadow-[0_24px_54px_rgba(166,107,118,0.26)]' : '',
                     ].join(' ')}
                   >
                     {item.featured && (
-                      <div className="absolute right-5 top-5 rounded-full bg-charcoal px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
+                      <div className="absolute right-5 top-5 rounded-full bg-charcoal px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white dark:bg-rose-200 dark:text-charcoal">
                         Best Value
                       </div>
                     )}
@@ -152,8 +152,8 @@ export default function PricingPage() {
 
                     <div className="mt-6">
                       <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-mauve">{item.badge}</p>
-                      <p className="mt-4 text-4xl text-deep-rose sm:text-5xl">{item.price}</p>
-                      <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-blush-mist bg-petal-white px-4 py-2 text-sm font-medium text-warm-gray dark:text-gray-400">
+                      <p className="mt-4 text-4xl text-deep-rose dark:text-rose-200 sm:text-5xl">{item.price}</p>
+                      <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-blush-mist dark:border-gray-700 bg-petal-white dark:bg-gray-800/90 px-4 py-2 text-sm font-medium text-warm-gray dark:text-gray-300">
                         <TimerReset size={16} className="text-dusty-pink" />
                         Durasi {item.duration}
                       </div>
@@ -181,7 +181,7 @@ export default function PricingPage() {
         <section className="px-6 py-8">
           <div className="mx-auto max-w-6xl">
             <motion.div
-              className="rounded-[32px] border border-blush-mist bg-white dark:bg-gray-900/85 p-8 shadow-card"
+              className="rounded-[32px] border border-blush-mist dark:border-gray-800 bg-white dark:bg-gray-900/85 p-8 shadow-card"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -203,15 +203,15 @@ export default function PricingPage() {
                   const Icon = item.icon
 
                   return (
-                    <div key={item.title} className="rounded-3xl border border-blush-mist bg-petal-white/90 p-5 transition-colors hover:border-dusty-pink">
+                    <div key={item.title} className="rounded-3xl border border-blush-mist dark:border-gray-800 bg-petal-white/90 dark:bg-gray-800/70 p-5 transition-colors hover:border-dusty-pink">
                       <div className="flex items-start gap-4">
                         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-gray-900 text-deep-rose shadow-btn">
                           <Icon size={22} />
                         </div>
                         <div>
                           <h3 className="font-body text-lg font-bold text-charcoal dark:text-gray-100">{item.title}</h3>
-                          <p className="mt-2 text-2xl font-semibold text-deep-rose">{item.price}</p>
-                          <p className="mt-2 text-sm leading-6 text-muted-mauve">{item.note}</p>
+                          <p className="mt-2 text-2xl font-semibold text-deep-rose dark:text-rose-200">{item.price}</p>
+                          <p className="mt-2 text-sm leading-6 text-muted-mauve dark:text-gray-400">{item.note}</p>
                         </div>
                       </div>
                     </div>
@@ -226,7 +226,7 @@ export default function PricingPage() {
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-6 lg:grid-cols-[1.4fr_0.9fr]">
               <motion.div
-                className="rounded-[30px] border border-blush-mist bg-white dark:bg-gray-900 p-8 shadow-card"
+                className="rounded-[30px] border border-blush-mist dark:border-gray-800 bg-white dark:bg-gray-900 p-8 shadow-card"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -238,7 +238,7 @@ export default function PricingPage() {
                     const Icon = item.icon
 
                     return (
-                      <div key={item.label} className="rounded-3xl border border-blush-mist bg-petal-white p-5 text-center">
+                      <div key={item.label} className="rounded-3xl border border-blush-mist dark:border-gray-800 bg-petal-white dark:bg-gray-800/80 p-5 text-center">
                         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-gray-900 text-dusty-pink shadow-btn">
                           <Icon size={24} />
                         </div>
@@ -248,8 +248,8 @@ export default function PricingPage() {
                   })}
                 </div>
 
-                <div className="mt-10 rounded-[28px] bg-gradient-to-r from-[#fff5f7] via-[#ffe7ec] to-[#fff7f8] p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-deep-rose">Cocok untuk berbagai momen spesial</p>
+                <div className="mt-10 rounded-[28px] bg-gradient-to-r from-[#fff5f7] via-[#ffe7ec] to-[#fff7f8] dark:from-gray-900 dark:via-slate-900 dark:to-gray-800 p-6">
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-deep-rose dark:text-rose-200">Cocok untuk berbagai momen spesial</p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     {moments.map((item) => (
                       <span
@@ -285,13 +285,13 @@ export default function PricingPage() {
                 <div className="mt-8 flex flex-col gap-3">
                   <a
                     href="/contact"
-                    className="inline-flex items-center justify-center rounded-2xl bg-white dark:bg-gray-900 px-5 py-3 text-sm font-bold text-charcoal dark:text-gray-100 transition-transform hover:-translate-y-0.5"
+                    className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-bold text-charcoal transition-transform hover:-translate-y-0.5 dark:bg-rose-100 dark:text-charcoal"
                   >
                     Hubungi Kami
                   </a>
                   <a
                     href="/booth"
-                    className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-transparent px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-white dark:bg-gray-900/10"
+                    className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-transparent px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-white hover:text-charcoal dark:hover:bg-white/10 dark:hover:text-white"
                   >
                     Coba Booth Demo
                   </a>
