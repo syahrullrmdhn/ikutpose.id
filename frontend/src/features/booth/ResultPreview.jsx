@@ -191,7 +191,7 @@ function useCanvas(photos, template) {
     if (!template || !photos?.length) return
     const canvas = canvasRef.current
     if (!canvas) return
-    
+
     canvas.width = template.canvas_width
     canvas.height = template.canvas_height
     const ctx = canvas.getContext('2d')
@@ -200,39 +200,78 @@ function useCanvas(photos, template) {
     ctx.fillStyle = template.background_color || '#ffffff'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    // Load and draw photos into slots
     const slots = template.photo_slots || []
-    photos.forEach((photo, index) => {
-      if (index < slots.length) {
-        const slot = slots[index]
+
+    // Detect duplikat-strip: 6 slots where right strip mirrors left strip.
+    // Photos 0-2 go into slots 0-2 (left) AND slots 3-5 (right).
+    const isDuplikatStrip = slots.length === 6 && photos.length <= 3
+
+    // Build effective photo-per-slot mapping
+    const slotPhotos = slots.map((_, i) => {
+      if (isDuplikatStrip && i >= 3) {
+        // Mirror: slot 3 -> photo 0, slot 4 -> photo 1, slot 5 -> photo 2
+        return photos[i - 3] ?? null
+      }
+      return photos[i] ?? null
+    })
+
+    // Load all photos first, then draw overlay on top
+    const drawPhotoInSlot = (slot, src) => {
+      return new Promise((resolve) => {
+        if (!src) { resolve(); return }
         const img = new Image()
         img.crossOrigin = 'anonymous'
         img.onload = () => {
-          // Draw photo with border radius
           ctx.save()
           drawRoundedRect(ctx, slot.x, slot.y, slot.width, slot.height, slot.borderRadius || 0)
           ctx.clip()
-          ctx.drawImage(img, slot.x, slot.y, slot.width, slot.height)
-          
-          // Draw slot border
-          ctx.strokeStyle = '#ffffff'
-          ctx.lineWidth = 4
-          ctx.stroke()
+          // Cover-fit: scale & center the photo to fill the slot
+          const imgAspect = img.naturalWidth / img.naturalHeight
+          const slotAspect = slot.width / slot.height
+          let drawW, drawH, drawX, drawY
+          if (imgAspect > slotAspect) {
+            // Photo is wider → fit height, crop sides
+            drawH = slot.height
+            drawW = img.naturalWidth * (slot.height / img.naturalHeight)
+            drawX = slot.x - (drawW - slot.width) / 2
+            drawY = slot.y
+          } else {
+            // Photo is taller → fit width, crop top/bottom
+            drawW = slot.width
+            drawH = img.naturalHeight * (slot.width / img.naturalWidth)
+            drawX = slot.x
+            drawY = slot.y - (drawH - slot.height) / 2
+          }
+          ctx.drawImage(img, drawX, drawY, drawW, drawH)
           ctx.restore()
+          resolve()
         }
-        img.src = photo
-      }
-    })
-
-    // Load and draw template overlay (frame)
-    if (template.overlay_image) {
-      const overlay = new Image()
-      overlay.crossOrigin = 'anonymous'
-      overlay.onload = () => {
-        ctx.drawImage(overlay, 0, 0, canvas.width, canvas.height)
-      }
-      overlay.src = template.overlay_image
+        img.onerror = resolve
+        img.src = src
+      })
     }
+
+    const drawOverlay = (src) => {
+      return new Promise((resolve) => {
+        if (!src) { resolve(); return }
+        const img = new Image()
+        img.crossOrigin = 'anonymous'
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+          resolve()
+        }
+        img.onerror = resolve
+        img.src = src
+      })
+    }
+
+    // Sequential render: all photo slots → then overlay on top
+    ;(async () => {
+      await Promise.all(slots.map((slot, i) => drawPhotoInSlot(slot, slotPhotos[i])))
+      if (template.overlay_image) {
+        await drawOverlay(template.overlay_image)
+      }
+    })()
   }, [photos, template])
 
   return canvasRef

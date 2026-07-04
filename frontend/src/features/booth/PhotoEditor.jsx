@@ -78,12 +78,17 @@ export default function PhotoEditor() {
                 const sh = (slot.height / canvasH) * previewH
                 const sr = Math.min((slot.borderRadius / canvasW) * previewW, (slot.borderRadius / canvasH) * previewH)
 
+                // Duplikat-strip: 6 slots, only 3 photos — mirror right side
+                const isDuplikatStrip = slots.length === 6 && photos.length <= 3
+                const photoIndex = isDuplikatStrip && i >= 3 ? i - 3 : i
+                const photoSrc = photos[photoIndex]
+
                 return (
-                  <div key={i} className="absolute overflow-hidden" style={{ left: sx, top: sy, width: sw, height: sh, borderRadius: sr, border: '2px solid #fff' }}>
-                    {photos[i] ? (
-                      <img src={photos[i]} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                  <div key={i} className="absolute overflow-hidden" style={{ left: sx, top: sy, width: sw, height: sh, borderRadius: sr }}>
+                    {photoSrc ? (
+                      <img src={photoSrc} alt={`Photo ${photoIndex + 1}`} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full bg-slate-200" />
+                      <div className="w-full h-full bg-slate-200/60" />
                     )}
                   </div>
                 )

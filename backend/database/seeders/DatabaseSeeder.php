@@ -206,6 +206,27 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
                 'sort_order' => 7,
             ],
+            [
+                'name' => 'Ikut Pose Strip 3x2',
+                'description' => 'Frame receipt strip 3 foto dicetak 2x side-by-side. Desain khas Ikut Pose dengan header tanggal, Instagram, dan footer receipt. Sempurna untuk event!',
+                'layout' => 'strip_3',
+                'canvas_width' => 1600,
+                'canvas_height' => 2404,
+                'background_color' => '#FFFFFF',
+                'photo_slots' => [
+                    ['x' => 30,  'y' => 429,  'width' => 740, 'height' => 574, 'borderRadius' => 0, 'rotation' => 0],
+                    ['x' => 30,  'y' => 1021, 'width' => 740, 'height' => 574, 'borderRadius' => 0, 'rotation' => 0],
+                    ['x' => 30,  'y' => 1614, 'width' => 740, 'height' => 574, 'borderRadius' => 0, 'rotation' => 0],
+                    ['x' => 830, 'y' => 429,  'width' => 740, 'height' => 574, 'borderRadius' => 0, 'rotation' => 0],
+                    ['x' => 830, 'y' => 1021, 'width' => 740, 'height' => 574, 'borderRadius' => 0, 'rotation' => 0],
+                    ['x' => 830, 'y' => 1614, 'width' => 740, 'height' => 574, 'borderRadius' => 0, 'rotation' => 0],
+                ],
+                'overlay_image' => '/frame-ikutpose-strip3x2.png',
+                'text_overlays' => [],
+                'is_premium' => false,
+                'is_active' => true,
+                'sort_order' => 8,
+            ],
         ];
 
         foreach ($templates as $index => $template) {

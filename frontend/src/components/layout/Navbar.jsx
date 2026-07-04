@@ -81,6 +81,14 @@ export default function Navbar() {
             <ArrowRight size={15} />
           </Link>
 
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 rounded-full bg-dusty-pink px-4 py-2 text-sm font-bold text-white shadow-btn transition-all hover:-translate-y-0.5 hover:bg-deep-rose dark:bg-rose-500 dark:text-white dark:hover:bg-rose-400"
+          >
+            Booking Sekarang
+            <ArrowRight size={15} />
+          </Link>
+
           {isAuthenticated ? (
             <div className="flex items-center gap-2">
               <Link
@@ -174,11 +182,21 @@ export default function Navbar() {
                 Coba Booth
               </Link>
 
+              <Link
+                to="/contact"
+                onClick={closeMenu}
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-dusty-pink px-4 py-3 text-sm font-bold text-white shadow-btn hover:bg-deep-rose dark:bg-rose-500 dark:text-white"
+              >
+                Booking Sekarang
+              </Link>
+            </div>
+
+            <div className="mt-3">
               {isAuthenticated ? (
                 <Link
                   to="/profile"
                   onClick={closeMenu}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
                 >
                   <UserRound size={16} />
                   Profil
@@ -187,7 +205,7 @@ export default function Navbar() {
                 <Link
                   to="/login"
                   onClick={closeMenu}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
                 >
                   <UserRound size={16} />
                   Login
