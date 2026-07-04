@@ -39,7 +39,7 @@ jobs:
           host: ${{ secrets.VM2_HOST }}
           port: ${{ secrets.VM2_SSH_PORT }}
           username: ${{ secrets.VM2_SSH_USER }}
-          password: ${{ secrets.VM2_SSH_PASS }}
+          key: ${{ secrets.VM2_SSH_KEY }}
           source: "backend/,frontend/dist/"
           target: "/var/www/ikutpose.id/"
           strip_components: 0
@@ -50,7 +50,7 @@ jobs:
           host: ${{ secrets.VM2_HOST }}
           port: ${{ secrets.VM2_SSH_PORT }}
           username: ${{ secrets.VM2_SSH_USER }}
-          password: ${{ secrets.VM2_SSH_PASS }}
+          key: ${{ secrets.VM2_SSH_KEY }}
           script: |
             cd /var/www/ikutpose.id/backend
             php artisan config:clear
