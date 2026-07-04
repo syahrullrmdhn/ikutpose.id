@@ -1,9 +1,20 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, LogIn } from 'lucide-react'
+import { BadgeCheck, Eye, EyeOff, LogIn, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useAuthStore } from '../../stores/authStore'
 import { login } from '../../api/auth'
+import Navbar from '../../components/layout/Navbar'
+import Footer from '../../components/layout/Footer'
+
+const sideHighlights = [
+  'Cetak instan untuk momen yang langsung bisa dibawa pulang.',
+  'Soft file gratis via QR download untuk semua tamu.',
+  'Template cantik, GIF ready, dan event custom branding.',
+]
+
+const unsplashImage =
+  'https://images.unsplash.com/photo-1544194215-541c2d3561a4?auto=format&fit=crop&w=1200&q=80'
 
 export default function LoginPage() {
  const navigate = useNavigate()
@@ -29,36 +40,44 @@ export default function LoginPage() {
  }
 
  return (
- <div className="min-h-screen bg-[#FAFAFA] dark:bg-gray-950 font-sans text-charcoal dark:text-gray-100 selection:bg-rose-300 flex flex-col justify-center px-6 py-12">
- <div className="sm:mx-auto sm:w-full sm:max-w-md">
- <img src="/Logobulat.jpg" alt="IkutPose" className="h-16 w-16 mx-auto mb-6 rounded-full shadow-card" />
+ <div className="min-h-screen bg-[#FAFAFA] dark:bg-gray-950 font-sans text-charcoal dark:text-gray-100 selection:bg-rose-300 flex flex-col">
+ <Navbar />
 
- <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
- <div className="bg-white dark:bg-gray-900 rounded-xl border border-border-subtle shadow-card px-8 py-10">
- <div className="text-center mb-8">
- <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-rose-200 dark:bg-rose-900/50 border border-border-subtle shadow-card text-charcoal dark:text-gray-100 mb-4">
- <LogIn size={22} strokeWidth={2.5} />
+ <main className="flex-1 px-6 py-10 md:py-14">
+ <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.92fr_1.08fr]">
+ <motion.div
+ className="order-2 lg:order-1 flex items-center"
+ initial={{ opacity: 0, x: -18 }}
+ animate={{ opacity: 1, x: 0 }}
+ transition={{ duration: 0.45 }}
+ >
+ <div className="w-full rounded-[32px] border border-border-subtle dark:border-gray-800 bg-white/86 dark:bg-gray-900/88 p-8 shadow-[0_24px_60px_rgba(196,145,155,0.18)] backdrop-blur md:p-10">
+ <div className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-deep-rose dark:bg-rose-900/30 dark:text-rose-200">
+ <LogIn size={14} />
+ Login IkutPose
  </div>
- <h1 className="text-xl font-extrabold text-charcoal dark:text-gray-100">Masuk ke Akun</h1>
- <p className="text-sm text-warm-gray dark:text-gray-400 font-medium mt-1">
-               Silakan masuk dengan akun Anda.
-             </p>
+
+ <div className="mt-6">
+ <h1 className="text-3xl md:text-4xl">Masuk ke akunmu dan lanjutkan momen yang belum selesai.</h1>
+ <p className="mt-3 text-sm leading-7 text-warm-gray dark:text-gray-300">
+ Akses dashboard event, simpan template favorit, dan lanjutkan pengalaman photobooth dengan tampilan yang sudah kami rapikan untuk desktop maupun mobile.
+ </p>
  </div>
 
- {error && <div className="mb-4 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-400 dark:border-red-900 text-sm text-red-700 dark:text-red-300 font-medium">{error}</div>}
+ {error && <div className="mt-6 px-4 py-3 rounded-2xl bg-red-50 dark:bg-red-950/30 border border-red-400 dark:border-red-900 text-sm text-red-700 dark:text-red-300 font-medium">{error}</div>}
 
- <form onSubmit={handleSubmit} className="space-y-4">
+ <form onSubmit={handleSubmit} className="mt-6 space-y-4">
  <div>
  <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Email</label>
  <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="admin@ikutpose.com"
- className="w-full px-4 py-3 rounded-xl border border-border-subtle text-sm bg-white dark:bg-gray-900 shadow-card focus:shadow-card focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none transition-all" />
+ className="w-full px-4 py-3 rounded-xl border border-border-subtle dark:border-gray-700 text-sm bg-white dark:bg-gray-900 shadow-card focus:shadow-card focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none transition-all" />
  </div>
  <div>
  <label className="block text-sm font-bold text-slate-700 dark:text-gray-200 mb-1.5">Password</label>
  <div className="relative">
  <input type={showPass ? 'text' : 'password'} required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Masukkan password"
- className="w-full px-4 py-3 rounded-xl border border-border-subtle text-sm bg-white dark:bg-gray-900 shadow-card focus:shadow-card focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none pr-12 transition-all" />
- <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:text-gray-300">
+ className="w-full px-4 py-3 rounded-xl border border-border-subtle dark:border-gray-700 text-sm bg-white dark:bg-gray-900 shadow-card focus:shadow-card focus:translate-x-[3px] focus:translate-y-[3px] focus:outline-none pr-12 transition-all" />
+ <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:hover:text-gray-300">
  {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
  </button>
  </div>
@@ -68,13 +87,70 @@ export default function LoginPage() {
  {loading ? 'Masuk...' : 'Masuk'}
  </button>
  </form>
+
+ <div className="mt-6 flex flex-col gap-3 border-t border-border-subtle dark:border-gray-800 pt-6 text-sm text-warm-gray dark:text-gray-400 sm:flex-row sm:items-center sm:justify-between">
+ <Link to="/" className="font-semibold hover:text-charcoal dark:hover:text-white transition-colors">
+ &larr; Kembali ke beranda
+ </Link>
+ <Link to="/register" className="font-semibold text-deep-rose dark:text-rose-200 hover:opacity-80 transition-opacity">
+ Belum punya akun? Daftar
+ </Link>
+ </div>
  </div>
  </motion.div>
 
- <p className="text-center text-xs text-slate-400 dark:text-gray-500 font-medium mt-6">
- <Link to="/" className="hover:text-slate-600 dark:text-gray-300 transition-colors">&larr; Kembali ke beranda</Link>
- </p>
+ <motion.div
+ className="order-1 lg:order-2"
+ initial={{ opacity: 0, x: 18 }}
+ animate={{ opacity: 1, x: 0 }}
+ transition={{ duration: 0.45, delay: 0.06 }}
+ >
+ <div className="relative overflow-hidden rounded-[36px] border border-white/70 dark:border-gray-800 shadow-[0_28px_64px_rgba(166,107,118,0.24)] min-h-[320px] lg:min-h-[680px]">
+ <img
+ src={unsplashImage}
+ alt="Pink neon sign aesthetic from Unsplash"
+ className="absolute inset-0 h-full w-full object-cover"
+ />
+ <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,250,251,0.14)_0%,rgba(45,34,38,0.34)_45%,rgba(45,34,38,0.8)_100%)] dark:bg-[linear-gradient(180deg,rgba(15,23,42,0.18)_0%,rgba(15,23,42,0.46)_42%,rgba(2,6,23,0.88)_100%)]" />
+
+ <div className="relative flex h-full flex-col justify-between p-6 md:p-8">
+ <div className="flex items-start justify-between gap-4">
+ <div className="inline-flex items-center gap-2 rounded-full bg-white/78 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-deep-rose backdrop-blur dark:bg-gray-900/70 dark:text-rose-200">
+ <Sparkles size={14} />
+ Moodboard
  </div>
+ <span className="rounded-full border border-white/35 bg-white/16 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
+ Unsplash
+ </span>
+ </div>
+
+ <div className="mt-10 max-w-md">
+ <p className="text-xs font-semibold uppercase tracking-[0.26em] text-white/75">IkutPose Photobooth</p>
+ <h2 className="mt-3 text-4xl leading-tight text-white md:text-5xl">
+ Masuk, pilih frame favoritmu, lalu lanjut bikin kenangan.
+ </h2>
+ <p className="mt-4 text-sm leading-7 text-white/82">
+ Visual ini saya ambil dari Unsplash supaya sisi login terasa lebih hangat, dreamy, dan tetap selaras dengan nuansa dusty pink brand kita.
+ </p>
+
+ <div className="mt-6 space-y-3">
+ {sideHighlights.map((item) => (
+ <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/18 bg-white/12 px-4 py-3 text-sm text-white/90 backdrop-blur">
+ <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/18 text-white">
+ <BadgeCheck size={14} />
+ </span>
+ <span>{item}</span>
+ </div>
+ ))}
+ </div>
+ </div>
+ </div>
+ </div>
+ </motion.div>
+ </div>
+ </main>
+
+ <Footer />
  </div>
  )
 }
