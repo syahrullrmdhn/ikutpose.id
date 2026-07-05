@@ -40,7 +40,6 @@ const mobileLinkClass = ({ isActive }) =>
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const { user, isAuthenticated, logout } = useAuthStore()
-
   const closeMenu = () => setOpen(false)
 
   return (
@@ -48,20 +47,22 @@ export default function Navbar() {
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-rose-300/80 to-transparent dark:via-rose-800/80" />
 
       <div className="mx-auto flex h-16 sm:h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-3">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3 flex-shrink-0">
           <img
             src="/Logobulat.jpg"
             alt="IkutPose"
-            className="h-11 w-11 rounded-2xl border border-white/70 object-cover shadow-card dark:border-gray-700"
+            className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl border border-white/70 object-cover shadow-card dark:border-gray-700"
           />
           <div className="hidden sm:block">
-            <p className="font-heading text-2xl leading-none text-charcoal dark:text-white">IkutPose</p>
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-mauve dark:text-gray-400">
+            <p className="font-heading text-xl sm:text-2xl leading-none text-charcoal dark:text-white">IkutPose</p>
+            <p className="mt-0.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-mauve dark:text-gray-400">
               Digital Photobooth
             </p>
           </div>
         </Link>
 
+        {/* Desktop nav links */}
         <div className="hidden lg:flex items-center gap-2 rounded-full border border-white/70 bg-white/72 p-1.5 shadow-card dark:border-gray-800 dark:bg-gray-900/82">
           {links.map((link) => (
             <NavLink key={link.href} to={link.href} className={desktopLinkClass}>
@@ -70,177 +71,123 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
-          <ThemeToggle className="rounded-2xl" />
+        {/* Right side: actions */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeToggle className="rounded-2xl hidden sm:flex" />
 
+          {/* Primary CTA */}
           <Link
             to="/booth"
-            className="inline-flex items-center gap-2 rounded-full bg-charcoal px-4 py-2 text-sm font-bold text-white shadow-btn transition-all hover:-translate-y-0.5 hover:bg-deep-rose dark:bg-rose-200 dark:text-charcoal dark:hover:bg-rose-100"
+            className="inline-flex items-center gap-1.5 rounded-full bg-charcoal px-3 sm:px-4 py-2 text-sm font-bold text-white shadow-btn transition-all hover:-translate-y-0.5 hover:bg-deep-rose dark:bg-rose-200 dark:text-charcoal dark:hover:bg-rose-100"
           >
-            Coba Booth
-            <ArrowRight size={15} />
+            <Sparkles size={15} className="hidden sm:block" />
+            <span className="hidden sm:inline">Coba Booth</span>
+            <span className="sm:hidden text-xs">Booth</span>
+            <ArrowRight size={15} className="hidden sm:block" />
           </Link>
 
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 rounded-full bg-dusty-pink px-4 py-2 text-sm font-bold text-white shadow-btn transition-all hover:-translate-y-0.5 hover:bg-deep-rose dark:bg-rose-500 dark:text-white dark:hover:bg-rose-400"
-          >
-            Booking Sekarang
-            <ArrowRight size={15} />
-          </Link>
-
+          {/* Auth */}
           {isAuthenticated ? (
-            <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2">
               <Link
                 to="/profile"
-                className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white/80 px-3 py-2 text-sm font-semibold text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-rose-200 text-sm font-bold text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:bg-rose-900/50 dark:text-rose-100"
+                title={user?.name}
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-rose-200 text-xs font-bold text-charcoal dark:bg-rose-900/50 dark:text-rose-100">
-                  {user?.name?.charAt(0).toUpperCase() || 'U'}
-                </span>
-                <span className="max-w-28 truncate">{user?.name}</span>
+                {user?.name?.charAt(0).toUpperCase() || 'U'}
               </Link>
-
               {user?.role === 'admin' && (
                 <Link
                   to="/admin"
-                  className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white/80 px-3 py-2 text-sm font-semibold text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-white/80 text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+                  title="Admin Panel"
                 >
-                  <LayoutDashboard size={15} />
-                  Admin
+                  <LayoutDashboard size={16} />
                 </Link>
               )}
-
               <button
                 onClick={logout}
-                className="inline-flex items-center gap-2 rounded-full border border-transparent px-3 py-2 text-sm font-semibold text-warm-gray transition-colors hover:text-muted-red dark:text-gray-400 dark:hover:text-rose-300"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-warm-gray transition-colors hover:text-muted-red hover:bg-red-50 dark:text-gray-400 dark:hover:text-rose-300 dark:hover:bg-red-900/20"
+                title="Keluar"
               >
-                <LogOut size={15} />
-                Keluar
+                <LogOut size={16} />
               </button>
             </div>
           ) : (
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white/80 px-4 py-2 text-sm font-semibold text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white/80 px-4 py-2 text-sm font-semibold text-charcoal shadow-btn transition-all hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
             >
               <UserRound size={15} />
               Login
             </Link>
           )}
-        </div>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle className="rounded-2xl" />
-          <button
-            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border-subtle bg-white/80 text-slate-700 shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-200"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* Hamburger */}
+          <div className="flex items-center gap-2 sm:hidden">
+            <ThemeToggle className="rounded-2xl" />
+            <button
+              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-border-subtle bg-white/80 text-slate-700 shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-200"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {open && (
-        <div className="border-t border-white/70 bg-[rgba(253,245,246,0.96)] px-6 py-5 backdrop-blur-xl dark:border-gray-800 dark:bg-[rgba(10,15,28,0.96)] md:hidden">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-4 rounded-[28px] border border-border-subtle bg-white/80 p-4 shadow-card dark:border-gray-800 dark:bg-gray-900/82">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-deep-rose dark:text-rose-300">
-                Capture Moments
-              </p>
-              <p className="mt-2 text-sm leading-6 text-warm-gray dark:text-gray-300">
-                Photobooth yang siap untuk hangout, wedding, wisuda, sampai event kantor dengan hasil yang langsung bisa dibawa pulang.
-              </p>
-            </div>
+        <div className="border-t border-white/70 bg-[rgba(253,245,246,0.96)] px-5 py-4 backdrop-blur-xl dark:border-gray-800 dark:bg-[rgba(10,15,28,0.96)] sm:hidden">
+          <div className="mx-auto max-w-6xl space-y-3">
+            {isAuthenticated && (
+              <div className="rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 dark:border-gray-800 dark:bg-gray-900/80">
+                <p className="text-sm font-bold text-charcoal dark:text-gray-100">{user?.name}</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-mauve dark:text-gray-500">{user?.role}</p>
+              </div>
+            )}
 
-            <div className="space-y-3">
+            <div className="space-y-1.5">
               {links.map((link) => (
                 <NavLink key={link.href} to={link.href} className={mobileLinkClass} onClick={closeMenu}>
                   {({ isActive }) => (
-                    <>
-                      <div className="flex items-center justify-between">
-                        <span className={`text-sm font-bold ${isActive ? 'text-charcoal dark:text-white' : 'text-charcoal dark:text-gray-100'}`}>
-                          {link.label}
-                        </span>
-                        <ArrowRight size={16} className={isActive ? 'text-deep-rose dark:text-rose-300' : 'text-muted-mauve dark:text-gray-500'} />
-                      </div>
-                      <p className="mt-1 text-xs leading-5 text-warm-gray dark:text-gray-400">{link.description}</p>
-                    </>
+                    <div className="flex items-center justify-between">
+                      <span className={`text-sm font-bold ${isActive ? 'text-charcoal dark:text-white' : 'text-charcoal dark:text-gray-100'}`}>
+                        {link.label}
+                      </span>
+                      <ArrowRight size={14} className={isActive ? 'text-deep-rose dark:text-rose-300' : 'text-muted-mauve dark:text-gray-500'} />
+                    </div>
                   )}
                 </NavLink>
               ))}
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              <Link
-                to="/booth"
-                onClick={closeMenu}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-charcoal px-4 py-3 text-sm font-bold text-white shadow-btn dark:bg-rose-200 dark:text-charcoal"
-              >
-                <Sparkles size={16} />
-                Coba Booth
-              </Link>
-
-              <Link
-                to="/contact"
-                onClick={closeMenu}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-dusty-pink px-4 py-3 text-sm font-bold text-white shadow-btn hover:bg-deep-rose dark:bg-rose-500 dark:text-white"
-              >
-                Booking Sekarang
-              </Link>
-            </div>
-
-            <div className="mt-3">
+            <div className="pt-2 space-y-2">
               {isAuthenticated ? (
-                <Link
-                  to="/profile"
-                  onClick={closeMenu}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
-                >
-                  <UserRound size={16} />
-                  Profil
-                </Link>
+                <>
+                  <Link to="/profile" onClick={closeMenu}
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-2.5 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100">
+                    <UserRound size={15} /> Profil
+                  </Link>
+                  {user?.role === 'admin' && (
+                    <Link to="/admin" onClick={closeMenu}
+                      className="flex w-full items-center justify-center gap-2 rounded-2xl bg-rose-100 px-4 py-2.5 text-sm font-bold text-charcoal dark:bg-rose-900/30 dark:text-rose-100">
+                      <LayoutDashboard size={15} /> Admin Panel
+                    </Link>
+                  )}
+                  <button onClick={() => { logout(); closeMenu() }}
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-bold text-muted-red dark:border-red-900 dark:bg-red-900/20 dark:text-rose-300">
+                    <LogOut size={15} /> Keluar
+                  </button>
+                </>
               ) : (
-                <Link
-                  to="/login"
-                  onClick={closeMenu}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-3 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100"
-                >
-                  <UserRound size={16} />
-                  Login
+                <Link to="/login" onClick={closeMenu}
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl border border-border-subtle bg-white/80 px-4 py-2.5 text-sm font-bold text-charcoal shadow-btn dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100">
+                  <UserRound size={15} /> Login
                 </Link>
               )}
             </div>
-
-            {isAuthenticated && (
-              <div className="mt-4 flex items-center justify-between rounded-2xl border border-border-subtle bg-white/70 px-4 py-3 dark:border-gray-800 dark:bg-gray-900/70">
-                <div>
-                  <p className="text-sm font-bold text-charcoal dark:text-gray-100">{user?.name}</p>
-                  <p className="text-xs uppercase tracking-[0.18em] text-muted-mauve dark:text-gray-500">{user?.role}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  {user?.role === 'admin' && (
-                    <Link
-                      to="/admin"
-                      onClick={closeMenu}
-                      className="rounded-xl bg-rose-100 px-3 py-2 text-xs font-bold text-charcoal dark:bg-rose-900/30 dark:text-rose-100"
-                    >
-                      Admin
-                    </Link>
-                  )}
-                  <button
-                    onClick={() => {
-                      logout()
-                      closeMenu()
-                    }}
-                    className="rounded-xl px-3 py-2 text-xs font-bold text-muted-red dark:text-rose-300"
-                  >
-                    Keluar
-                  </button>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       )}
