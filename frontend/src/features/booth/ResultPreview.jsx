@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { useBoothStore } from '../../stores/boothStore'
-import { Download, Share2, Camera, RotateCcw } from 'lucide-react'
+import { Download, Share2, RotateCcw, Loader2 } from 'lucide-react'
 import Confetti from './Confetti'
 
-// Sound effects using Web Audio API
 function useSound() {
   const playSound = (type) => {
     try {
@@ -12,7 +11,6 @@ function useSound() {
       const gainNode = ctx.createGain()
       oscillator.connect(gainNode)
       gainNode.connect(ctx.destination)
-
       switch (type) {
         case 'shutter':
           oscillator.type = 'square'
@@ -47,20 +45,16 @@ function useSound() {
             osc.stop(ctx.currentTime + i * 0.12 + 0.2)
           })
           break
-        default:
-          break
+        default: break
       }
-    } catch (e) {
-      // Audio not supported
-    }
+    } catch (e) {}
   }
-
   return playSound
 }
 
 export default function ResultPreview() {
-  const { photos, template, step, prevStep, reset } = useBoothStore()
-  const canvasRef = useCanvas(photos, template)
+  const { photos, template, prevStep, reset } = useBoothStore()
+  const { canvasRef, canvasReady } = useCanvas(photos, template)
   const [showConfetti, setShowConfetti] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
   const playSound = useSound()
@@ -73,7 +67,7 @@ export default function ResultPreview() {
   }, [playSound])
 
   const handleDownload = () => {
-    if (!canvasRef.current) return
+    if (!canvasRef.current || !canvasReady) return
     playSound('sparkle')
     const link = document.createElement('a')
     link.download = `ikutpose-${Date.now()}.png`
@@ -83,18 +77,14 @@ export default function ResultPreview() {
   }
 
   const handleShare = async () => {
-    if (!canvasRef.current) return
+    if (!canvasRef.current || !canvasReady) return
     try {
       const blob = await new Promise(resolve => canvasRef.current.toBlob(resolve, 'image/png'))
-      if (!blob) {
-        handleDownload()
-        return
-      }
-
+      if (!blob) { handleDownload(); return }
       if (navigator.share) {
         await navigator.share({
           title: 'Foto dari ikutpose.id',
-          text: 'Lihat foto photobooth aku! 📸',
+          text: 'Lihat foto photobooth aku!',
           files: [new File([blob], 'ikutpose.png', { type: 'image/png' })]
         })
       } else {
@@ -113,28 +103,26 @@ export default function ResultPreview() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       {showConfetti && <Confetti />}
-      
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-card p-8 space-y-6 relative overflow-hidden">
-        {/* Celebration Banner */}
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-card p-6 sm:p-8 space-y-6 relative overflow-hidden">
         <div className="text-center">
           <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-dusty-pink/10 via-dusty-pink/20 to-dusty-pink/10 rounded-full">
-            <span className="animate-sparkle-twinkle text-lg">✨</span>
             <h2 className="text-2xl font-bold text-text-primary">Foto Siap!</h2>
-            <span className="animate-sparkle-twinkle text-lg" style={{ animationDelay: '0.5s' }}>✨</span>
           </div>
-          <p className="text-text-muted mt-2">Cantik banget hasilnya! 🎀</p>
+          <p className="text-text-muted mt-2">Cantik banget hasilnya!</p>
         </div>
 
-        {/* Photo Preview */}
         <div className="relative">
           <div className="mx-auto max-w-sm shadow-2xl rounded-lg overflow-hidden ring-4 ring-white ring-offset-4 ring-offset-dusty-pink/10">
             <canvas ref={canvasRef} className="w-full" />
+            {!canvasReady && (
+              <div className="absolute inset-0 bg-white/60 dark:bg-gray-900/60 flex items-center justify-center">
+                <Loader2 size={32} className="animate-spin text-dusty-pink" />
+              </div>
+            )}
           </div>
-          {/* Glow effect behind photo */}
           <div className="absolute inset-0 -z-10 blur-3xl opacity-20 bg-dusty-pink rounded-full" />
         </div>
 
-        {/* Photo Info */}
         <div className="flex justify-center gap-6 text-sm text-text-muted">
           <span>{template?.name || 'Photo Strip'}</span>
           <span>·</span>
@@ -143,25 +131,24 @@ export default function ResultPreview() {
           <span>{photos?.length || 4} foto</span>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-3">
+        <div className="grid grid-cols-2 sm:flex sm:gap-3 gap-2">
           <button
             onClick={handleDownload}
-            className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
-              downloaded
-                ? 'bg-emerald-500 text-white'
-                : 'bg-dusty-pink hover:bg-rose-500 text-white'
+            disabled={!canvasReady}
+            className={`col-span-2 sm:flex-1 px-4 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
+              !canvasReady ? 'bg-slate-300 cursor-not-allowed text-white' :
+              downloaded ? 'bg-emerald-500 text-white' : 'bg-dusty-pink hover:bg-rose-500 text-white'
             }`}
           >
-            <Download size={20} />
-            {downloaded ? 'Tersimpan ✨' : 'Download'}
+            {!canvasReady ? <Loader2 size={20} className="animate-spin" /> : <Download size={20} />}
+            {!canvasReady ? 'Menyiapkan...' : downloaded ? 'Tersimpan' : 'Download'}
           </button>
           <button
             onClick={handleShare}
-            className="flex-1 px-4 py-3 rounded-lg bg-charcoal hover:bg-slate-800 text-white font-semibold transition-all flex items-center justify-center gap-2"
+            disabled={!canvasReady}
+            className="flex-1 px-4 py-3 rounded-lg bg-charcoal hover:bg-slate-800 text-white font-semibold transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Share2 size={20} />
-            Share
+            <Share2 size={20} /> Share
           </button>
           <button
             onClick={handleRetake}
@@ -171,51 +158,41 @@ export default function ResultPreview() {
           </button>
         </div>
 
-        {/* Back Button */}
         <button
           onClick={() => prevStep()}
           className="w-full text-center py-2 text-text-muted hover:text-charcoal dark:text-gray-100 transition-colors text-sm"
         >
-          ← Kembali ke edit
+          Kembali ke edit
         </button>
       </div>
     </div>
   )
 }
 
-// Canvas hook to render the final composite
 function useCanvas(photos, template) {
   const canvasRef = useRef(null)
+  const [canvasReady, setCanvasReady] = useState(false)
 
   useEffect(() => {
     if (!template || !photos?.length) return
     const canvas = canvasRef.current
     if (!canvas) return
 
+    setCanvasReady(false)
     canvas.width = template.canvas_width
     canvas.height = template.canvas_height
     const ctx = canvas.getContext('2d')
 
-    // Draw background
     ctx.fillStyle = template.background_color || '#ffffff'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     const slots = template.photo_slots || []
-
-    // Detect duplikat-strip: 6 slots where right strip mirrors left strip.
-    // Photos 0-2 go into slots 0-2 (left) AND slots 3-5 (right).
     const isDuplikatStrip = slots.length === 6 && photos.length <= 3
-
-    // Build effective photo-per-slot mapping
     const slotPhotos = slots.map((_, i) => {
-      if (isDuplikatStrip && i >= 3) {
-        // Mirror: slot 3 -> photo 0, slot 4 -> photo 1, slot 5 -> photo 2
-        return photos[i - 3] ?? null
-      }
+      if (isDuplikatStrip && i >= 3) return photos[i - 3] ?? null
       return photos[i] ?? null
     })
 
-    // Load all photos first, then draw overlay on top
     const drawPhotoInSlot = (slot, src) => {
       return new Promise((resolve) => {
         if (!src) { resolve(); return }
@@ -225,18 +202,15 @@ function useCanvas(photos, template) {
           ctx.save()
           drawRoundedRect(ctx, slot.x, slot.y, slot.width, slot.height, slot.borderRadius || 0)
           ctx.clip()
-          // Cover-fit: scale & center the photo to fill the slot
           const imgAspect = img.naturalWidth / img.naturalHeight
           const slotAspect = slot.width / slot.height
           let drawW, drawH, drawX, drawY
           if (imgAspect > slotAspect) {
-            // Photo is wider → fit height, crop sides
             drawH = slot.height
             drawW = img.naturalWidth * (slot.height / img.naturalHeight)
             drawX = slot.x - (drawW - slot.width) / 2
             drawY = slot.y
           } else {
-            // Photo is taller → fit width, crop top/bottom
             drawW = slot.width
             drawH = img.naturalHeight * (slot.width / img.naturalWidth)
             drawX = slot.x
@@ -256,25 +230,22 @@ function useCanvas(photos, template) {
         if (!src) { resolve(); return }
         const img = new Image()
         img.crossOrigin = 'anonymous'
-        img.onload = () => {
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-          resolve()
-        }
+        img.onload = () => { ctx.drawImage(img, 0, 0, canvas.width, canvas.height); resolve() }
         img.onerror = resolve
         img.src = src
       })
     }
 
-    // Sequential render: all photo slots → then overlay on top
     ;(async () => {
       await Promise.all(slots.map((slot, i) => drawPhotoInSlot(slot, slotPhotos[i])))
       if (template.overlay_image) {
         await drawOverlay(template.overlay_image)
       }
+      setCanvasReady(true)
     })()
   }, [photos, template])
 
-  return canvasRef
+  return { canvasRef, canvasReady }
 }
 
 function drawRoundedRect(ctx, x, y, w, h, r) {

@@ -136,12 +136,12 @@ export default function PhotoEditor() {
 
           {/* Right - Tools Panel */}
           <div className="flex-1 min-w-0 space-y-4">
-            {/* Tabs */}
-            <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
+            {/* Tabs - scrollable on mobile */}
+            <div className="flex gap-1 bg-slate-100 dark:bg-gray-800 rounded-lg p-1 overflow-x-auto">
               {tabs.map(({ id, icon: Icon, label }) => (
                 <button key={id} onClick={() => setTab(id)}
-                  className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-all ${tab === id ? 'bg-white dark:bg-gray-900 text-charcoal dark:text-gray-100 shadow-sm' : 'text-text-muted hover:text-charcoal dark:text-gray-100'}`}>
-                  <Icon size={14} /> {label}
+                  className={`flex-shrink-0 flex items-center justify-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-2 rounded-md text-xs font-semibold transition-all whitespace-nowrap ${tab === id ? 'bg-white dark:bg-gray-900 text-charcoal dark:text-gray-100 shadow-sm' : 'text-text-muted hover:text-charcoal dark:text-gray-100'}`}>
+                  <Icon size={14} /> <span className="hidden xs:inline sm:inline">{label}</span>
                 </button>
               ))}
             </div>

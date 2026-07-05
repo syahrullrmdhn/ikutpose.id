@@ -53,6 +53,8 @@ jobs:
           key: ${{ secrets.VM2_SSH_KEY }}
           script: |
             cd /var/www/ikutpose.id/backend
+            mkdir -p public/uploads/temp
+            chmod 777 public/uploads/temp
             php artisan config:clear
             php artisan cache:clear
             php artisan view:clear
