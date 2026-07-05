@@ -127,29 +127,29 @@ export default function CameraControls({ onClose, onCapture, aspectRatio = 1, te
   return (
     <div className="fixed inset-0 bg-black flex flex-col z-50">
       {/* Top Bar */}
-      <div className="bg-black/70 backdrop-blur-sm px-6 py-4 flex items-center justify-between border-b border-white/10">
-        <button onClick={onClose} className="w-10 h-10 rounded-lg bg-white dark:bg-gray-900/10 hover:bg-white dark:bg-gray-900/20 flex items-center justify-center transition-colors">
+      <div className="bg-black/70 backdrop-blur-sm px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between border-b border-white/10">
+        <button onClick={onClose} className="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors flex-shrink-0">
           <X size={20} className="text-white" />
         </button>
-        <div className="flex gap-2">
+        <div className="flex gap-1.5 sm:gap-2 mx-1">
           {['off', 3, 5, 10].map(t => (
-            <button key={String(t)} onClick={() => startTimer(t)} className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${timer === (t === 'off' ? 'off' : t + 's') ? 'bg-dusty-pink text-white' : 'bg-white dark:bg-gray-900/10 text-white/70 hover:bg-white dark:bg-gray-900/20'}`}>
+            <button key={String(t)} onClick={() => startTimer(t)} className={`px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${timer === (t === 'off' ? 'off' : t + 's') ? 'bg-dusty-pink text-white' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
               {t === 'off' ? 'Off' : t + 's'}
             </button>
           ))}
         </div>
-        <div className="flex gap-3">
-          <button onClick={() => setShowOverlayPicker(!showOverlayPicker)} className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 ${appliedOverlay && appliedOverlay.id !== 'none' ? 'bg-dusty-pink text-white' : 'bg-white dark:bg-gray-900/10 text-white hover:bg-white dark:bg-gray-900/20'}`}>
-            <Layers size={18} />
-            Overlay
+        <div className="flex gap-2 sm:gap-3">
+          <button onClick={() => setShowOverlayPicker(!showOverlayPicker)} className={`px-2.5 sm:px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm ${appliedOverlay && appliedOverlay.id !== 'none' ? 'bg-dusty-pink text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+            <Layers size={16} className="sm:w-[18px] sm:h-[18px]" />
+            <span className="hidden sm:inline">Overlay</span>
           </button>
-          <button onClick={() => setIsMirror(!isMirror)} className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 ${isMirror ? 'bg-dusty-pink text-white' : 'bg-white dark:bg-gray-900/10 text-white hover:bg-white dark:bg-gray-900/20'}`}>
-            <Settings size={18} />
-            Mirror {isMirror ? 'ON' : 'OFF'}
+          <button onClick={() => setIsMirror(!isMirror)} className={`px-2.5 sm:px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm ${isMirror ? 'bg-dusty-pink text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+            <Settings size={16} className="sm:w-[18px] sm:h-[18px]" />
+            <span className="hidden sm:inline">Mirror {isMirror ? 'ON' : 'OFF'}</span>
           </button>
-          <button onClick={() => { setCountdown(null); handleCapture() }} className="px-6 py-2 rounded-lg bg-dusty-pink hover:bg-rose-500 text-white font-semibold transition-all flex items-center gap-2">
-            <Camera size={20} />
-            Capture
+          <button onClick={() => { setCountdown(null); handleCapture() }} className="px-3 sm:px-6 py-2 rounded-lg bg-dusty-pink hover:bg-rose-500 text-white font-semibold transition-all flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+            <Camera size={16} className="sm:w-[20px] sm:h-[20px]" />
+            <span className="hidden sm:inline">Capture</span>
           </button>
         </div>
       </div>

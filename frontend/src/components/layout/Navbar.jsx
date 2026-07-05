@@ -47,7 +47,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 border-b border-white/60 bg-[rgba(253,245,246,0.78)] backdrop-blur-xl dark:border-gray-800 dark:bg-[rgba(10,15,28,0.8)]">
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-rose-300/80 to-transparent dark:via-rose-800/80" />
 
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 sm:h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link to="/" className="flex items-center gap-3">
           <img
             src="/Logobulat.jpg"
